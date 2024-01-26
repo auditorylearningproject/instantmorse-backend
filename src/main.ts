@@ -11,7 +11,7 @@ import { INestApplication } from '@nestjs/common';
 
 let httpsOptions;
 
-const server = express()
+const server = express();
 
 let port: number;
 
@@ -27,13 +27,16 @@ async function bootstrap() {
 }
 //add CORS host?
 (async () => {
-
   await bootstrap();
   const appInstance = await appInstancePromise;
-  if (appInstance.get(ConfigService).get("isProduction") === true) {
+  if (appInstance.get(ConfigService).get('isProduction') === true) {
     httpsOptions = {
-      key: fs.readFileSync('/etc/letsencrypt/live/instantmorse.codes/privkey.pem'),
-      cert: fs.readFileSync('/etc/letsencrypt/live/instantmorse.codes/fullchain.pem'),
+      key: fs.readFileSync(
+        '/etc/letsencrypt/live/instantmorse.codes/privkey.pem',
+      ),
+      cert: fs.readFileSync(
+        '/etc/letsencrypt/live/instantmorse.codes/fullchain.pem',
+      ),
     };
   } else {
     httpsOptions = {
@@ -43,9 +46,4 @@ async function bootstrap() {
   }
   const httpServer = http.createServer(server).listen(port);
   const httpsServer = https.createServer(httpsOptions, server).listen(443);
-
 })();
-
-
-
-

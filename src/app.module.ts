@@ -11,10 +11,17 @@ import configuration from './config/configuration';
     ConfigModule.forRoot({
       envFilePath: ['.env.production', '.env.development'],
       isGlobal: true,
-      load: [configuration]
+      load: [configuration],
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'instantmorse-frontend', 'app-frontend', 'dist'),
+      rootPath: join(
+        __dirname,
+        '..',
+        '..',
+        'instantmorse-frontend',
+        'app-frontend',
+        'dist',
+      ),
     }),
   ],
   controllers: [AppController],
