@@ -1,5 +1,5 @@
 {
-  "extends": "@tsconfig/bun/tsconfig.json",
+  // "extends": "@tsconfig/bun/tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,

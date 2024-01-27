@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -12,7 +13,7 @@ import configuration from './config/configuration';
       envFilePath: ['.env.production', '.env.development'],
       isGlobal: true,
       load: [configuration],
-    }),
+          }),
     ServeStaticModule.forRoot({
       rootPath: join(
         __dirname,
@@ -23,6 +24,7 @@ import configuration from './config/configuration';
         'dist',
       ),
     }),
+    MongooseModule.forRoot('mongodb://localhost/nest'),
   ],
   controllers: [AppController],
   providers: [AppService],
