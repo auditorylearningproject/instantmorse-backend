@@ -24,7 +24,7 @@ import configuration from './config/configuration';
         'dist',
       ),
     }),
-    MongooseModule.forRoot('mongodb+srv://DGarstecki:Pr0j0920%21@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
+    MongooseModule.forRoot('mongodb+srv://DGarstecki:<Password>@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
   ],
   controllers: [AppController],
   providers: [AppService],
