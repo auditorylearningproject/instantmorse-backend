@@ -128,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+#sensitive data for data base
+./instantmorse-backend/src/config/sensitive.ts

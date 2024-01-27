@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import configuration from './config/configuration';
+import * as config from './config/sensitive';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import configuration from './config/configuration';
         'dist',
       ),
     }),
-    MongooseModule.forRoot('mongodb+srv://DGarstecki:Pr0j0920%21@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
+    MongooseModule.forRoot('mongodb+srv://'+config.user+':'+config.pass+'@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
   ],
   controllers: [AppController],
   providers: [AppService],
