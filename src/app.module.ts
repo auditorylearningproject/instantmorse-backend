@@ -25,7 +25,7 @@ import * as config from './config/sensitive';
         'dist',
       ),
     }),
-    MongooseModule.forRoot('mongodb+srv://'+config.user+':'+config.pass+'@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
+    MongooseModule.forRoot('mongodb+srv://'+'@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
   ],
   controllers: [AppController],
   providers: [AppService],
