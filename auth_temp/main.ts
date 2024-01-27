@@ -4,17 +4,6 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 // import * as dotenv from "dotenv";
 
-   //MongoDB Integration
-// @Module({
-//     imports: [
-//         MongooseModule.forRoot('mongodb+srv://your-db-uri', {
-//             useNewUrlParser: true,
-//             useUnifiedTopology: true,
-//         }),
-//     ],
-// })
-// export class AppModule { }
-
 interface UserForm {
     user: string;
     pass: string;
