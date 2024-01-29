@@ -131,3 +131,5 @@ dist
 
 #sensitive data for data base
 src/config/sensitive.ts
+
+.vscode/settings.json
