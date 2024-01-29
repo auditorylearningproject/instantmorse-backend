@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 #sensitive data for data base
-./instantmorse-backend/src/config/sensitive.ts
+src/config/sensitive.ts
