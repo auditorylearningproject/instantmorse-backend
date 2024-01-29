@@ -1,6 +1,6 @@
 interface SensitiveDate {
-    user: string;
-    pass: string;
+  user: string;
+  pass: string;
 }
 
 export const user = "DGarstecki";
