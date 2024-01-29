@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -8,13 +7,13 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import configuration from '../config/configuration';
 import { TranscriptController } from './transcript.controller';
-// import { HttpModule } from '@nestjs/axios';
 import { APP_FILTER } from '@nestjs/core';
 import { NotFoundFilter } from './not-found-filter';
-// import { AuthModule } from '../auth/auth.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './constants';
 
 @Module({
     imports: [
@@ -34,11 +33,7 @@ import { UsersService } from '../users/users.service';
             ),
             serveStaticOptions: { fallthrough: false },
         }),
-        //MongooseModule.forRoot('mongodb+srv://'+config.user+':'+config.pass+'@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
-        // HttpModule,
-        // AuthModule,
         UsersModule,
-        // AuthModule,
     ],
     controllers: [AppController, TranscriptController],
     providers: [AppService, TranscribeService, {
@@ -51,9 +46,17 @@ import { UsersService } from '../users/users.service';
     exports: [UsersService],
 })
 @Module({
-    imports: [UsersModule],
+    imports: [
+        UsersModule,
+        JwtModule.register({
+            global: true,
+            secret: jwtConstants.secret,
+            signOptions: { expiresIn: '60s' },
+        })
+    ],
     providers: [AuthService],
     controllers: [AuthController],
+    exports: [AuthService],
 })
 export class UsersModule { }
 export class AppModule { }
