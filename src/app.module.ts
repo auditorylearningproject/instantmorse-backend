@@ -12,6 +12,7 @@ import { TranscriptController } from './transcript.controller';
 import { HttpModule } from '@nestjs/axios';
 import { APP_FILTER } from '@nestjs/core';
 import { NotFoundFilter } from './not-found-filter';
+import * as path from 'path';
 
 @Module({
   imports: [
@@ -21,15 +22,8 @@ import { NotFoundFilter } from './not-found-filter';
       load: [configuration],
           }),
     ServeStaticModule.forRoot({
-      rootPath: join(
-        __dirname,
-        '..',
-        '..',
-        'instantmorse-frontend',
-        'app-frontend',
-        'dist',
-      ),
-      serveStaticOptions: { fallthrough: false },
+      rootPath: path.resolve('/home/srvhost/project/instantmorse-frontend/app-frontend/dist'),
+      serveStaticOptions: { fallthrough: true },
     }),
     //MongooseModule.forRoot('mongodb+srv://'+config.user+':'+config.pass+'@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
     HttpModule,
@@ -41,3 +35,12 @@ import { NotFoundFilter } from './not-found-filter';
   },],
 })
 export class AppModule {}
+
+console.error(path.resolve(
+        __dirname,
+        '..',
+        '..',
+        'instantmorse-frontend',
+        'app-frontend',
+        'dist',
+      ))
