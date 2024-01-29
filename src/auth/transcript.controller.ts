@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Req, Res, Header, HttpStatus, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { TranscribeRequestDto } from './dto/transcribe';
+import { TranscribeRequestDto } from '../dto/transcribe';
 import { Readable } from 'stream'
 import { PassThrough, Writable } from 'stream';
 import { TranscribeService } from './transcript.service';

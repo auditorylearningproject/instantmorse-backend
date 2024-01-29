@@ -1,6 +1,6 @@
-import { HttpService } from '@nestjs/axios';
+// import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { AxiosError, AxiosResponse } from 'axios';
+// import { AxiosError, AxiosResponse } from 'axios';
 import * as fs from 'fs';
 import { Observable, catchError, map } from 'rxjs';
 //import { Cat } from './interfaces/cat.interface';
