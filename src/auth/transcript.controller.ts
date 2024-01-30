@@ -10,14 +10,14 @@ import {
   UseInterceptors,
 } from "@nestjs/common";
 import { Request, Response } from "express";
-import { TranscribeRequestDto } from "./dto/transcribe";
+import { TranscribeRequestDto } from "../dto/transcribe";
 import { Readable } from "stream";
 import { PassThrough, Writable } from "stream";
 import { TranscribeService } from "./transcript.service";
 import * as fs from "fs";
 import { FileInterceptor } from "@nestjs/platform-express";
-import * as streamifier from "streamifier";
-import * as FfmpegCommand from "fluent-ffmpeg";
+import streamifier from "streamifier";
+import FfmpegCommand from "fluent-ffmpeg";
 
 @Controller("transcribe")
 export class TranscriptController {
@@ -73,7 +73,7 @@ export class TranscriptController {
       console.log("Content Type:", contentType);
 
       console.log(contentType);
-      const command = new FfmpegCommand.FfmpegCommand()
+      const command = FfmpegCommand()
         .input(bufferStream)
         .inputFormat(contentType)
         .audioFrequency(48000)
