@@ -1,13 +1,14 @@
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from "@nestjs/platform-express";
+import { NestFactory } from "@nestjs/core";
 // import { AppModule } from './app.module';
-import * as fs from 'fs';
-import * as express from 'express';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import * as http from 'http';
-import * as https from 'https';
-import { ConfigService } from '@nestjs/config';
-import { INestApplication } from '@nestjs/common';
+import * as fs from "fs";
+import * as express from "express";
+import { ExpressAdapter } from "@nestjs/platform-express";
+import * as http from "http";
+import * as https from "https";
+import { ConfigService } from "@nestjs/config";
+import { INestApplication } from "@nestjs/common";
+import { AppModule } from "./auth.module";
 
 let httpsOptions;
 
@@ -20,8 +21,8 @@ let appInstancePromise: Promise<INestApplication>;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
   const configService = app.get(ConfigService);
-  port = configService.get<number>('PORT');
-  app.setGlobalPrefix('api');
+  port = configService.get<number>("PORT");
+  app.setGlobalPrefix("api");
   await app.init();
   appInstancePromise = Promise.resolve(app);
 }
@@ -29,19 +30,19 @@ async function bootstrap() {
 (async () => {
   await bootstrap();
   const appInstance = await appInstancePromise;
-  if (appInstance.get(ConfigService).get('isProduction') === true) {
+  if (appInstance.get(ConfigService).get("isProduction") === true) {
     httpsOptions = {
       key: fs.readFileSync(
-        '/etc/letsencrypt/live/instantmorse.codes/privkey.pem',
+        "/etc/letsencrypt/live/instantmorse.codes/privkey.pem",
       ),
       cert: fs.readFileSync(
-        '/etc/letsencrypt/live/instantmorse.codes/fullchain.pem',
+        "/etc/letsencrypt/live/instantmorse.codes/fullchain.pem",
       ),
     };
   } else {
     httpsOptions = {
-      key: fs.readFileSync('src/config/local_certs/localhost.key'),
-      cert: fs.readFileSync('src/config/local_certs/localhost.crt'),
+      key: fs.readFileSync("src/config/local_certs/localhost.key"),
+      cert: fs.readFileSync("src/config/local_certs/localhost.crt"),
     };
   }
   const httpServer = http.createServer(server).listen(port);

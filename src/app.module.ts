@@ -7,7 +7,6 @@ import { TranscribeService } from "./transcript.service";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
 import configuration from "./config/configuration";
-import * as config from "./config/sensitive";
 import { TranscriptController } from "./transcript.controller";
 import { HttpModule } from "@nestjs/axios";
 import { APP_FILTER } from "@nestjs/core";
