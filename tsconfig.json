@@ -18,6 +18,9 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "types": ["node", "jest", "Multer"]
+    "types": ["node", "jest", "Multer"],
+    "paths": {
+      "@/*": ["instantmorse-backend/*"],
+      "@nestjs/*": ["instantmorse-backend/nodemodules/*"]},
   }
 }
