@@ -1,6 +1,6 @@
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { NestFactory } from "@nestjs/core";
-// import { AppModule } from './app.module';
+import { AppModule } from '../app.module';
 import * as fs from "fs";
 import * as express from "express";
 import { ExpressAdapter } from "@nestjs/platform-express";
@@ -8,7 +8,6 @@ import * as http from "http";
 import * as https from "https";
 import { ConfigService } from "@nestjs/config";
 import { INestApplication } from "@nestjs/common";
-import { AppModule } from "./auth.module";
 
 let httpsOptions;
 
