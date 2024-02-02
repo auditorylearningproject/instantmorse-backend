@@ -7,13 +7,14 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
 import configuration from "../config/configuration";
 import { TranscriptController } from "../transcript.controller";
-import { APP_FILTER } from "@nestjs/core";
+import { APP_FILTER, APP_GUARD } from "@nestjs/core";
 import { NotFoundFilter } from "../not-found-filter";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { UsersService } from "../users/users.service";
 import { JwtModule } from "@nestjs/jwt";
 import { jwtConstants } from "./constants";
+import { AuthGuard } from "./auth.guard";
 
 @Module({
   imports: [
@@ -58,7 +59,11 @@ import { jwtConstants } from "./constants";
       signOptions: { expiresIn: "60s" },
     }),
   ],
-  providers: [AuthService],
+  providers: 
+    [AuthService,
+    {provide: APP_GUARD,
+    useClass: AuthGuard
+  }],
   controllers: [AuthController],
   exports: [AuthService],
 })
