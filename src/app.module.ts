@@ -1,5 +1,4 @@
 import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
 import { ConfigModule } from "@nestjs/config";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -12,6 +11,8 @@ import { HttpModule } from "@nestjs/axios";
 import { APP_FILTER } from "@nestjs/core";
 import { NotFoundFilter } from "./not-found-filter";
 import * as path from "path";
+import { MongooseModule } from "@nestjs/mongoose";
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -26,8 +27,9 @@ import * as path from "path";
       ),
       serveStaticOptions: { fallthrough: true },
     }),
-    //MongooseModule.forRoot('mongodb+srv://'+config.user+':'+config.pass+'@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
     HttpModule,
+    AuthenticationModule,
+    // MongooseModule.forRoot('mongodb://localhost/nest-blog', { useNewUrlParser: true }),
   ],
   controllers: [AppController, TranscriptController],
   providers: [
