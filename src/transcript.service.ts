@@ -139,18 +139,18 @@ class SpeechRecognizer {
           signal: AbortSignal.timeout(this.operation_timeout),
         }),
       }); //research "spread operator"
-      const response_text = await response.text();
+      const response_text = await response;
       console.log(response_text);
       // ignore any blank blocks
       let actual_result: any = null;
-      for (const line of response_text.split("\n")) {
-        if (!line) continue;
-        const result = JSON.parse(line).result;
-        if (result.length !== 0) {
-          actual_result = result[0];
-          break;
-        }
-      }
+      // for (const line of response_text.split("\n")) {
+      //   if (!line) continue;
+      //   const result = JSON.parse(line).result;
+      //   if (result.length !== 0) {
+      //     actual_result = result[0];
+      //     break;
+      //   }
+      // }
 
       // return results
       if (show_all) {

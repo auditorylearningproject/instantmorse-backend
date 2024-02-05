@@ -1,4 +1,4 @@
-export class CreateAuthenticationDto {
+export interface Authentication {
     username: string;
     password: string;
 }

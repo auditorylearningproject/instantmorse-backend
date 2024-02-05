@@ -1,25 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, HttpCode, Header, Redirect, HttpStatus, UseGuards } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateAuthenticationDto } from './dto/create-authentication.dto';
 import { UpdateAuthenticationDto } from './dto/update-authentication.dto';
+import { Request } from 'express';
+import { Authentication } from '../interfaces/authentication.interface';
+import { AuthGuard } from './authentication.guard';
 
 @Controller('authentication') //means it looks in the folder /authentication
 export class AuthenticationController {
-  constructor(private readonly authenticationService: AuthenticationService) {}
+  constructor(private authenticationService: AuthenticationService) {}
 
-  @Post()
-  create(@Body() createAuthenticationDto: CreateAuthenticationDto) {
-    return this.authenticationService.create(createAuthenticationDto);
+  @Post('login') //adds new information
+  @Header('Cache-Control', 'none')
+  @HttpCode(HttpStatus.OK)
+  signIn(@Body() signInDto: Record<string, any>) {
+    return this.authenticationService.signIn(signInDto.username, signInDto.password);
   }
 
-  @Get()
-  findAll() {
-    return this.authenticationService.findAll();
+  @Get() //maps GET/authentication - gets information
+  @Redirect('instantmorse.codes/static/auth', 301) //sample redirection - can redirect back to the authentication page if the user or pass is wrong
+  async findAll(@Req() request: Request): Promise<Authentication[]> {
+    return this.authenticationService.findAll(); //overrides Redirect if findAll is true
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authenticationService.findOne(+id);
+  @UseGuards(AuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+      return req.user;
+  }
+
+  @Get(':id') //gets a specific object or type from the stored info
+  findOne(@Param("id") id: number): string {
+    console.log(id);
+    return this.authenticationService.findOne(id);
   }
 
   @Patch(':id')

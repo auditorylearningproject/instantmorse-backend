@@ -13,6 +13,8 @@ import { NotFoundFilter } from "./not-found-filter";
 import * as path from "path";
 import { MongooseModule } from "@nestjs/mongoose";
 import { AuthenticationModule } from './authentication/authentication.module';
+import { AuthenticationController } from "./authentication.controller";
+import { AuthenticationService } from "./authentication/authentication.service";
 
 @Module({
   imports: [
@@ -31,7 +33,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
     AuthenticationModule,
     // MongooseModule.forRoot('mongodb://localhost/nest-blog', { useNewUrlParser: true }),
   ],
-  controllers: [AppController, TranscriptController],
+  controllers: [AppController, TranscriptController, AuthenticationController],
   providers: [
     AppService,
     TranscribeService,
@@ -39,7 +41,9 @@ import { AuthenticationModule } from './authentication/authentication.module';
       provide: APP_FILTER,
       useClass: NotFoundFilter,
     },
+    AuthenticationService,
   ],
+  exports: [AuthenticationService],
 })
 export class AppModule {}
 
