@@ -4,7 +4,7 @@ import { CreateAuthenticationDto } from './dto/create-authentication.dto';
 import { UpdateAuthenticationDto } from './dto/update-authentication.dto';
 import { Request } from 'express';
 import { Authentication } from '../interfaces/authentication.interface';
-import { AuthGuard } from './authentication.guard';
+import { AuthenticationGuard } from './authentication.guard';
 
 @Controller('authentication') //means it looks in the folder /authentication
 export class AuthenticationController {
@@ -23,7 +23,7 @@ export class AuthenticationController {
     return this.authenticationService.findAll(); //overrides Redirect if findAll is true
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthenticationGuard)
   @Get('profile')
   getProfile(@Request() req) {
       return req.user;
