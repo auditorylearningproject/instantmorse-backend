@@ -11,7 +11,7 @@ import configuration from "../config/configuration";
 import { TranscriptController } from "../transcript.controller";
 import { APP_FILTER, APP_GUARD } from "@nestjs/core";
 import { NotFoundFilter } from "../not-found-filter";
-import { UsersService } from "../users/users.service";
+import { UserService } from "../users/users.service";
 import { JwtModule } from "@nestjs/jwt";
 import { jwtConstants } from "../authentication/constants";
 import { AuthenticationGuard } from "./authentication.guard";
@@ -47,8 +47,8 @@ import { AuthenticationGuard } from "./authentication.guard";
   ],
 })
 @Module({
-  providers: [UsersService],
-  exports: [UsersService],
+  providers: [UserService],
+  exports: [UserService],
 })
 @Module({
   imports: [
