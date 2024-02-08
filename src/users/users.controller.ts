@@ -7,13 +7,13 @@ import {
   Delete,
   Put,
 } from "@nestjs/common";
-import { UserService } from "./users.service"; // Import your user service
+import { UsersService } from "./users.service"; // Import your user service
 import { User } from "./users.service"; // Assuming User interface is defined
 import { CreateUserDto } from "./dto/create-user.dto";
 
 @Controller("users") // Base route for this controller
 export class UserController {
-  constructor(private readonly userService: UserService) {} // Inject user service
+  constructor(private readonly userService: UsersService) {} // Inject user service
 
   @Get()
   findAll(): Promise<User[]> {
