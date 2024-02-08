@@ -12,7 +12,7 @@ import { APP_FILTER } from "@nestjs/core";
 import { NotFoundFilter } from "./not-found-filter";
 import * as path from "path";
 import { MongooseModule } from "@nestjs/mongoose";
-import { AuthenticationModule } from './authentication/authentication.module';
+import { AuthenticationModule } from "./authentication/authentication.module";
 import { AuthenticationController } from "./authentication/authentication.controller";
 import { AuthenticationService } from "./authentication/authentication.service";
 

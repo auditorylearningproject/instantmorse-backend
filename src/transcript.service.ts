@@ -142,7 +142,7 @@ class SpeechRecognizer {
       const response_text = await response;
       console.log(response_text);
       // ignore any blank blocks
-      let actual_result: any = null;
+      const actual_result: any = null;
       // for (const line of response_text.split("\n")) {
       //   if (!line) continue;
       //   const result = JSON.parse(line).result;

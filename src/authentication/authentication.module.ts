@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-import { AuthenticationService } from './authentication.service';
-import { AuthenticationController } from './authentication.controller';
+import { Module } from "@nestjs/common";
+import { AuthenticationService } from "./authentication.service";
+import { AuthenticationController } from "./authentication.controller";
 import { ConfigModule } from "@nestjs/config";
 import { AppController } from "../app.controller";
 import { AppService } from "../app.service";
@@ -59,15 +59,13 @@ import { AuthenticationGuard } from "./authentication.guard";
       signOptions: { expiresIn: "60s" },
     }),
   ],
-  providers: 
-    [AuthenticationService,
-    {provide: APP_GUARD,
-    useClass: AuthenticationGuard
-  }],
+  providers: [
+    AuthenticationService,
+    { provide: APP_GUARD, useClass: AuthenticationGuard },
+  ],
   controllers: [AuthenticationController],
   exports: [AuthenticationService],
 })
 export class UsersModule {}
 export class AppModule {}
 export class AuthenticationModule {}
-

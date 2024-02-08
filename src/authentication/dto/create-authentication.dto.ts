@@ -1,5 +1,5 @@
 export class CreateAuthenticationDto {
-    userID: number;
-    username: string;
-    password: string;
+  userID: number;
+  username: string;
+  password: string;
 }
