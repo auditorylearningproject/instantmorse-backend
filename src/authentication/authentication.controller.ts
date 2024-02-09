@@ -18,14 +18,14 @@ export class AuthenticationController {
   }
 
   @Get() //maps GET/authentication - gets information
-  @Redirect('/static/auth', 301) //sample redirection - can redirect back to the authentication page if the user or pass is wrong
+  @Redirect('instantmorse.codes/static/auth', 301) //sample redirection - can redirect back to the authentication page if the user or pass is wrong
   async findAll(@Req() request: Request): Promise<Authentication[]> {
     return this.authenticationService.findAll(); //overrides Redirect if findAll is true
   }
 
   @UseGuards(AuthenticationGuard)
   @Get('profile')
-  getProfile(@Req() req) {
+  getProfile(@Request() req) {
       return req.user;
   }
 
