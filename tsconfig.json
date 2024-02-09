@@ -1,7 +1,7 @@
 {
-  "extends": "@tsconfig/bun/tsconfig.json",
+  // "extends": "@tsconfig/bun/tsconfig.json",
   "compilerOptions": {
-    "module": "es2015",
+    "module": "commonjs",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -17,19 +17,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "types": [
-      "node",
-      "jest",
-      "Multer"
-    ],
-    "paths": {
-      "@/*": [
-        "instantmorse-backend/*"
-      ],
-      "@nestjs/*": [
-        "instantmorse-backend/nodemodules/*"
-      ]
-    },
+    "noFallthroughCasesInSwitch": false
   }
 }
