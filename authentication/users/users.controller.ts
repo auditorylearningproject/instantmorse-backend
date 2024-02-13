@@ -15,22 +15,34 @@ import { CreateUserDto } from "./dto/create-user.dto";
 export class UserController {
   constructor(private readonly userService: UsersService) {} // Inject user service
 
-  @Get()
-  findAll(): Promise<User[]> {
-    // GET endpoint to fetch all users
-    return this.userService.findAll();
-  }
+  // @Get()
+  // findAll(): Promise<User[]> {
+  //   // GET endpoint to fetch all users
+  //   return this.userService.findAll();
+  // }
 
-  @Get(":id")
-  findOne(@Param("id") id: string): Promise<User> {
-    // GET endpoint to fetch a single user by ID
-    return this.userService.findOne(id);
-  }
+  // @Get(":id")
+  // findOne(@Param("id") id: string): Promise<User> {
+  //   // GET endpoint to fetch a single user by ID
+  //   return this.userService.findOne(id);
+  // }
 
   // @Post()
   // create(@Body() createUserDto: CreateUserDto): Promise<User> { // POST endpoint to create a new user
   //     return this.userService.create(createUserDto);
   // }
+
+  @Post()
+  async submit(@Body() username: string, password: string) {
+    try {
+      await this.userService.findOne(username, password);
+      console.log("Success");
+      return { message: "Success" };
+    } catch (error) {
+      console.log("Error")
+      throw new Error("Error happened");
+    }
+  }
 
   // @Put(':id')
   // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> { // PUT endpoint to update an existing user
