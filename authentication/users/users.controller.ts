@@ -14,11 +14,10 @@ import { CreateUserDto } from "./dto/create-user.dto";
 export class UserController {
   constructor(private readonly userService: UsersService) {} // Inject user service
 
-  @Post()
+  @Post("login")
   async submit(@Body() username: string, password: string) {
     try {
-      
-      await this.userService.findOne(username, password);
+      await this.userService.findUser(username, password);
       console.log("Success");
       return { message: "Success" };
     } catch (error) {

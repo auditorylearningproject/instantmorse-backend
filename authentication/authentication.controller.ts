@@ -14,18 +14,31 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { AuthenticationService } from "./authentication.service";
-import { UpdateAuthenticationDto } from "./dto/update-authentication.dto";
+import { signInDto } from "./dto/createUser.dto";
+import { UsersService } from "./users/users.service";
 import { Request } from "express";
 import { Authentication } from "./interfaces/authentication.interface";
 import { AuthenticationGuard } from "./authentication.guard";
+import { userInfo } from "os";
 
 @Controller("authentication") //means it looks in the folder /authentication
 export class AuthenticationController {
-  // constructor(private authenticationService: AuthenticationService) {}
-    @Post("login") //adds new information
-    signIn(@Body() signInDto: SignInDto) {
-      
-    }
+  constructor(private authenticationService: AuthenticationService) {}
+  @HttpCode(HttpStatus.OK)
+  @Post("login")
+  signIn(@Body() signInDto: Record<string, any>) {
+    return this.authenticationService.signIn(signInDto.username, signInDto.password);
+  }
+  // async submit(@Body() username: string, password: string) {
+  //   try {
+  //     UsersService.findOne(username, password);
+  //     console.log("Success");
+  //     return { message: "Success" };
+  //   } catch (error) {
+  //     console.log("Error")
+  //     throw new Error("Error happened");
+  //   }
+  // }
   
     // @Get() //maps GET/authentication - gets information
     // @Redirect("static/auth", 301) //sample redirection - can redirect back to the authentication page if the user or pass is wrong
