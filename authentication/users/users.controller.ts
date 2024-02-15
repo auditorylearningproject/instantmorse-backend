@@ -14,17 +14,17 @@ import { CreateUserDto } from "./dto/create-user.dto";
 export class UserController {
   constructor(private readonly userService: UsersService) {} // Inject user service
 
-  @Post("login")
-  async submit(@Body() username: string, password: string) {
-    try {
-      await this.userService.findUser(username, password);
-      console.log("Success");
-      return { message: "Success" };
-    } catch (error) {
-      console.log("Error")
-      throw new Error("Error happened");
-    }
-  }
+  // @Post("login")
+  // async submit(@Body() username: string) {
+  //   try {
+  //     await this.userService.findUser(username);
+  //     console.log("Success");
+  //     return { message: "Success" };
+  //   } catch (error) {
+  //     console.log("Error")
+  //     throw new Error("Error happened");
+  //   }
+  // }
 
   // @Get()
   // findAll(): Promise<User[]> {
