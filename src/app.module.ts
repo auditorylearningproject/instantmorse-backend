@@ -13,6 +13,9 @@ import { HttpModule } from '@nestjs/axios';
 import { APP_FILTER } from '@nestjs/core';
 import { NotFoundFilter } from './not-found-filter';
 import * as path from 'path';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { AuthenticationController } from '../authentication/authentication.controller';
+import { UsersModule } from '../authentication/users/users.module';
 
 @Module({
   imports: [
@@ -27,9 +30,10 @@ import * as path from 'path';
     }),
     //MongooseModule.forRoot('mongodb+srv://'+config.user+':'+config.pass+'@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
     HttpModule,
+    UsersModule
   ],
-  controllers: [AppController, TranscriptController],
-  providers: [AppService, TranscribeService, {
+  controllers: [AppController, TranscriptController, AuthenticationController],
+  providers: [AppService, AuthenticationService, TranscribeService, {
     provide: APP_FILTER,
     useClass: NotFoundFilter,
   },],

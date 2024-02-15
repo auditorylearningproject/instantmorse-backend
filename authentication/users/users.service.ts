@@ -13,15 +13,21 @@ export class UsersService {
     },
     {
       userId: 2,
-      username: "maria",
-      password: "guess",
+      username: "admin",
+      password: "M0rse23-24C0de",
     },
   ];
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
-  }
-  async findAll(): Promise<User[] | undefined> {
-    return this.users;
-  }
+  async findUser(username: string): Promise<User | undefined> {
+    return this.users.find(user => user.username === username);
+    // if (username === users.username && password === user.password) {
+    //   return "Success"; //return JWT token or refer to the file that will make that token
+    // } else {
+    //   return "No" //error out
+    }
+    // return this.users.find((user) => user.username === username && user.password === password);
+  // }
+  // async findAll(): Promise<User[] | undefined> {
+  //   return this.users;
+  // }
 }
