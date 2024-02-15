@@ -46,11 +46,11 @@ export class AuthenticationController {
     //   return this.authenticationService.findAll(); //overrides Redirect if findAll is true
     // }
   
-    // @UseGuards(AuthenticationGuard)
-    // @Get("profile")
-    // getProfile(@Req() req) {
-    //   return req.user;
-    // }
+    @UseGuards(AuthenticationGuard)
+    @Get("profile")
+    getProfile(@Req() req) {
+      return req.user;
+    }
   
     // @Get(":id") //gets a specific object or type from the stored info
     // findOne(@Param("id") id: number): string {
