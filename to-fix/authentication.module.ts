@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { AuthenticationService } from "./authentication.service";
-import { AuthenticationController } from "../authentication/authentication.controller";
+import { AuthenticationController } from "../src/authentication/authentication.controller";
 import { ConfigModule } from "@nestjs/config";
 import { AppController } from "../app.controller";
 import { AppService } from "../app.service";
@@ -11,7 +11,7 @@ import { APP_FILTER, APP_GUARD } from "@nestjs/core";
 import { NotFoundFilter } from "../not-found-filter";
 import { UsersService } from "./users/users.service";
 import { JwtModule } from "@nestjs/jwt";
-import { jwtConstants } from "../authentication/constants";
+import { jwtConstants } from "../src/authentication/constants";
 import { AuthenticationGuard } from "./authentication.guard";
 
 @Module({
