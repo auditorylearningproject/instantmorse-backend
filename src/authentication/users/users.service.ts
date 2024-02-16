@@ -14,7 +14,7 @@ export class UsersService {
     {
       userId: 2,
       username: 'admin',
-      password: 'M0rse23-24C0de',
+      password: 'CantBeSyncedToGithub',
     },
   ];
 
