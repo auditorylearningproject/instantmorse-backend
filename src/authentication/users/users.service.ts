@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 
 // This should be a real class/interface representing a user entity
 export type User = any;
@@ -8,24 +8,24 @@ export class UsersService {
   private readonly users = [
     {
       userId: 1,
-      username: "David",
-      password: "Garstecki",
+      username: 'David',
+      password: 'Garstecki',
     },
     {
       userId: 2,
-      username: "admin",
-      password: "M0rse23-24C0de",
+      username: 'admin',
+      password: 'M0rse23-24C0de',
     },
   ];
 
   async findUser(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username);
+    return this.users.find((user) => user.username === username);
     // if (username === users.username && password === user.password) {
     //   return "Success"; //return JWT token or refer to the file that will make that token
     // } else {
     //   return "No" //error out
-    }
-    // return this.users.find((user) => user.username === username && user.password === password);
+  }
+  // return this.users.find((user) => user.username === username && user.password === password);
   // }
   // async findAll(): Promise<User[] | undefined> {
   //   return this.users;

@@ -1,3 +1,3 @@
 export const jwtConstants = {
-  secret: "DMPG123456789.",
+  secret: 'DMPG123456789.',
 };
