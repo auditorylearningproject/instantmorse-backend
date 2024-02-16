@@ -7,24 +7,22 @@ import { TranscribeService } from './transcript/transcript.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 // import { join } from 'path';
 import configuration from './config/configuration';
-import * as config from './config/sensitive';
 import { TranscriptController } from './transcript/transcript.controller';
 import { HttpModule } from '@nestjs/axios';
 import { APP_FILTER } from '@nestjs/core';
 import { NotFoundFilter } from './not-found-filter';
 import * as path from 'path';
 
-import { AuthenticationService } from '../authentication/authentication.service';
-import { AuthenticationController } from '../authentication/authentication.controller';
-import { UsersModule } from '../authentication/users/users.module';
-import { jwtConstants } from 'authentication/constants';
+import { AuthenticationService } from './authentication/authentication.service';
+import { AuthenticationController } from './authentication/authentication.controller';
+import { UsersModule } from './authentication/users/users.module';
+import { jwtConstants } from './authentication/constants';
 import { JwtModule } from '@nestjs/jwt';
-
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.production', '.env.development'],
+      envFilePath: ['.env.production', '.env.development'], //the first file takes prescedence, so we can add ".env.production" only to the server.
       isGlobal: true,
       load: [configuration],
     }),
@@ -42,7 +40,6 @@ import { JwtModule } from '@nestjs/jwt';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
     }),
-
   ],
   controllers: [AppController, TranscriptController, AuthenticationController],
   providers: [
