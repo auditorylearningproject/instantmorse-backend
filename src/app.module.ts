@@ -21,7 +21,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.production', '.env.development'],
+      envFilePath: ['.env.production', '.env.development'], //the first file takes prescedence, so we can add ".env.production" only to the server.
       isGlobal: true,
       load: [configuration],
     }),

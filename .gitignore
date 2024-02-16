@@ -132,4 +132,6 @@ dist
 #sensitive data for data base
 ./instantmorse-backend/src/config/sensitive.ts
 .vscode/
-.env.development
+
+# Production file with text 'PRODUCTION=true' only on server.
+.env.production
