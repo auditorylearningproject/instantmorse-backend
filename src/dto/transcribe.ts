@@ -1,3 +1,1 @@
-export class TranscribeRequestDto{
-    
-}
+export class TranscribeRequestDto {}

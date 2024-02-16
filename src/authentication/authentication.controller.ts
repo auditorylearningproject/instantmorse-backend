@@ -42,7 +42,7 @@ export class AuthenticationController {
   //     throw new Error("Error happened");
   //   }
   // }
-
+  
   // @Get() //maps GET/authentication - gets information
   // @Redirect("static/auth", 301) //sample redirection - can redirect back to the authentication page if the user or pass is wrong
   // async findAll(@Req() request: Request): Promise<Authentication[]> {

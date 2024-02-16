@@ -14,6 +14,7 @@ let httpsOptions;
 const server = express();
 
 let port: number;
+let devPort: number;
 
 let appInstancePromise: Promise<INestApplication>;
 
@@ -21,7 +22,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
   const configService = app.get(ConfigService);
   port = configService.get<number>('PORT');
+  devPort = configService.get<number>('DEV_PORT');
   app.setGlobalPrefix('api');
+  app.enableCors();
   await app.init();
   appInstancePromise = Promise.resolve(app);
 }
@@ -38,12 +41,16 @@ async function bootstrap() {
         '/etc/letsencrypt/live/instantmorse.codes/fullchain.pem',
       ),
     };
+    const httpServer = http.createServer(server).listen(port);
+    const httpsServer = https.createServer(httpsOptions, server).listen(443);
+
   } else {
     httpsOptions = {
       key: fs.readFileSync('src/config/local_certs/localhost.key'),
       cert: fs.readFileSync('src/config/local_certs/localhost.crt'),
     };
+    const httpServer = http.createServer(server).listen(devPort);
   }
-  const httpServer = http.createServer(server).listen(port);
-  const httpsServer = https.createServer(httpsOptions, server).listen(443);
+
+  
 })();
