@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { AxiosError, AxiosResponse } from 'axios';
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import { Observable, catchError, map } from 'rxjs';
 //import { Cat } from './interfaces/cat.interface';
 
@@ -12,6 +12,18 @@ export class TranscribeService {
 
   async transcribe(stream: fs.ReadStream): Promise<string> {
     const recording = await streamToBlob(stream, 'audio/flac'); //used to be "audio/ogg; codecs=opus" OR WEBM
+
+    // /* test code to save file to filesystem... */
+    // const buffer = Buffer.from(await recording.arrayBuffer());
+    // const path = 'file.flac'; // Specify the file path
+    // fs.writeFile(path, buffer, {}, (err: any) => {
+    //   if (err) {
+    //     console.error(err);
+    //     return;
+    //   }
+    //   console.log('audio saved');
+    // });
+
     try {
       const result = await this.speechRecognizer.recognize_google(
         recording,
@@ -165,6 +177,9 @@ class SpeechRecognizer {
         console.log("We couldn't hear anything!");
         throw new Error('UnknownValueError');
       }
+      // else {
+      //   console.log(response_text);
+      // }
 
       const best_hypothesis =
         'confidence' in actual_result
