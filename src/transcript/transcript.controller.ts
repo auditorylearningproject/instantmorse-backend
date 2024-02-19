@@ -73,10 +73,11 @@ export class TranscriptController {
       console.log('Content Type:', contentType);
 
       console.log(contentType);
-      const command: typeof FfmpegCommand = FfmpegCommand()
+      const command = new FfmpegCommand()
         .input(bufferStream)
         .inputFormat(contentType)
         .audioFrequency(48000)
+        .audioChannels(1)
         .outputFormat('flac')
         .audioCodec('flac');
 
