@@ -16,10 +16,13 @@ export class AuthenticationService {
     username: string,
     password: string,
   ): Promise<{ access_token: string }> {
-    const user = await this.usersService.findUser(username); //finds the username
+    const user = await this.usersService.findByUsername(username); //finds the username
     if (user?.password !== password) {
       //if the username is found, checks the password
       throw new UnauthorizedException();
+    } else if (user && user.password === password) {
+      const { password, ...result } = user;
+      return result;
     }
     const payload = { sub: user.userId, username: user.username };
     return {
