@@ -32,9 +32,7 @@ import { JwtModule } from '@nestjs/jwt';
       ),
       serveStaticOptions: { fallthrough: true },
     }),
-    MongooseModule.forRoot(
-      'mongodb://admin:M0rse23-24C0de@instantmorse.codes/',
-    ),
+    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING, { tls: true }),
     HttpModule,
     UsersModule,
     JwtModule.register({

@@ -5,4 +5,5 @@ export default () => ({
     port: parseInt(process.env.DATABASE_PORT, 10) || 27017,
   },
   isProduction: process.env.PRODUCTION === 'true',
+  database_conn_string: process.env.DB_CONNECTION_STRING,
 });
