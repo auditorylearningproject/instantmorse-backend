@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+// import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -22,7 +22,7 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.production', '.env.development'], //the first file takes precedence, so we can add ".env.production" only to the server.
+      envFilePath: ['.env.production', '.env.development'], //the first file takes prescedence, so we can add ".env.production" only to the server.
       isGlobal: true,
       load: [configuration],
     }),
@@ -32,15 +32,13 @@ import { JwtModule } from '@nestjs/jwt';
       ),
       serveStaticOptions: { fallthrough: true },
     }),
-    MongooseModule.forRoot(
-      'mongodb://admin:M0rse23-24C0de@instantmorse.codes/',
-    ),
+    //MongooseModule.forRoot('mongodb+srv://'+config.user+':'+config.pass+'@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
     HttpModule,
     UsersModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '30d' },
+      signOptions: { expiresIn: '60s' },
     }),
   ],
   controllers: [AppController, TranscriptController, AuthenticationController],
