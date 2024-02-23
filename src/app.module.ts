@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-// import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -22,7 +22,7 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.production', '.env.development'], //the first file takes prescedence, so we can add ".env.production" only to the server.
+      envFilePath: ['.env.production', '.env.development'], //the first file takes precedence, so we can add ".env.production" only to the server.
       isGlobal: true,
       load: [configuration],
     }),
@@ -32,13 +32,13 @@ import { JwtModule } from '@nestjs/jwt';
       ),
       serveStaticOptions: { fallthrough: true },
     }),
-    //MongooseModule.forRoot('mongodb+srv://'+config.user+':'+config.pass+'@auditorylearningproject.xixsty6.mongodb.net/morse?retryWrites=true&w=majority'),
+    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING, { tls: true }),
     HttpModule,
     UsersModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '30d' },
     }),
   ],
   controllers: [AppController, TranscriptController, AuthenticationController],
@@ -54,7 +54,7 @@ import { JwtModule } from '@nestjs/jwt';
   ],
   exports: [AuthenticationService],
 })
-export class AppModule {}
+export class AppModule { }
 
 console.error(
   path.resolve(

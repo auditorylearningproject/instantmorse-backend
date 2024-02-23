@@ -1,33 +1,52 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User } from '../schemas/users.model';
 
-// This should be a real class/interface representing a user entity
-export type User = any;
+// export type User = any;
 
 @Injectable()
 export class UsersService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'David',
-      password: 'Garstecki',
-    },
-    {
-      userId: 2,
-      username: 'admin',
-      password: 'CantBeSyncedToGithub',
-    },
-  ];
+  constructor(@InjectModel(User.username) private userModel: Model<User>) { }
 
-  async findUser(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
-    // if (username === users.username && password === user.password) {
-    //   return "Success"; //return JWT token or refer to the file that will make that token
-    // } else {
-    //   return "No" //error out
+  async findAll(): Promise<User[]> {
+    return this.userModel.find().exec();
   }
-  // return this.users.find((user) => user.username === username && user.password === password);
+
+  async findById(userId: string): Promise<User> {
+    return this.userModel.findById(userId).exec();
+  }
+
+  async findByUsername(username: string): Promise<User | undefined> {
+    return this.userModel.findOne({ username }).exec();
+  }
+
+  async findByToken(access_token: string): Promise<User> {
+    return this.userModel.findOne({ access_token }).exec();
+  }
+
+  // async create(username: User): Promise<User> {
+  //   const createdUser = new this.userModel(username);
+  //   return createdUser.save();
   // }
-  // async findAll(): Promise<User[] | undefined> {
-  //   return this.users;
-  // }
+  async create(createUserDto: {
+    userId: number;
+    username: string;
+    password: string;
+    access_token: string;
+  }): Promise<User> {
+    const createdUser = new this.userModel(createUserDto);
+    return createdUser.save();
+  }
+
+
+  async update(userId: number, username: User): Promise<User> {
+    return this.userModel
+      .findByIdAndUpdate(userId, username, { new: true })
+      .exec();
+  }
+
+  async delete(userId: number): Promise<User> {
+    return this.userModel.findByIdAndDelete(userId).exec();
+  }
 }
