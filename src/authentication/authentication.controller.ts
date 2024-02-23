@@ -20,6 +20,7 @@ import { Request } from 'express';
 import { Authentication } from './interfaces/authentication.interface';
 import { AuthenticationGuard } from './authentication.guard';
 import { userInfo } from 'os';
+import { User } from './schemas/users.model';
 
 @Controller('authentication') //means it looks in the folder /authentication
 export class AuthenticationController {
