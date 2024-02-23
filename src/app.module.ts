@@ -32,7 +32,21 @@ import { JwtModule } from '@nestjs/jwt';
       ),
       serveStaticOptions: { fallthrough: true },
     }),
+    // begin MongoDB connections
     MongooseModule.forRoot(process.env.DB_CONNECTION_STRING, { tls: true }),
+    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING + 'Lessons', {
+      connectionName: 'lessons',
+      tls: true,
+    }),
+    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING + 'Users', {
+      connectionName: 'users',
+      tls: true,
+    }),
+    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING + 'statistics', {
+      connectionName: 'statistics',
+      tls: true,
+    }),
+    // end of MongoDB connections
     HttpModule,
     UsersModule,
     JwtModule.register({
