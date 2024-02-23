@@ -18,15 +18,15 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class User extends Document {
-    @Prop({ required: true })
-    userId: number;
-    @Prop({ required: true })
-    username: string;
-    @Prop({ required: true })
-    password: string;
-    @Prop()
-    access_token: string;
-    static username: string;
+  @Prop({ required: true })
+  userId: number;
+  @Prop({ required: true })
+  username: string;
+  @Prop({ required: true })
+  password: string;
+  @Prop()
+  access_token: string;
+  static username: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

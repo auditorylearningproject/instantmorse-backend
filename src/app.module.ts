@@ -54,7 +54,7 @@ import { JwtModule } from '@nestjs/jwt';
   ],
   exports: [AuthenticationService],
 })
-export class AppModule { }
+export class AppModule {}
 
 console.error(
   path.resolve(
