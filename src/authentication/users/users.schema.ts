@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, HydratedDocument } from 'mongoose';
 // import * as mongoose from 'mongoose';
 
 // export const UserSchema = new mongoose.Schema({
@@ -15,6 +15,8 @@ import { Document } from 'mongoose';
 //   password: string;
 //   access_token: string;
 // }
+
+export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User extends Document {

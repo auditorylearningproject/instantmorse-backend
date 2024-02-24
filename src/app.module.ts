@@ -18,11 +18,12 @@ import { AuthenticationController } from './authentication/authentication.contro
 import { UsersModule } from './authentication/users/users.module';
 import { jwtConstants } from './authentication/constants';
 import { JwtModule } from '@nestjs/jwt';
+import mongoose from 'mongoose';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.production', '.env.development'], //the first file takes precedence, so we can add ".env.production" only to the server.
+      envFilePath: ['.env.production', '.env.development', '.env'], //the first file takes precedence, so we can add ".env.production" only to the server.
       isGlobal: true,
       load: [configuration],
     }),
@@ -34,17 +35,20 @@ import { JwtModule } from '@nestjs/jwt';
     }),
     // begin MongoDB connections
     MongooseModule.forRoot(process.env.DB_CONNECTION_STRING, { tls: true }),
-    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING + 'Lessons', {
+    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING, {
       connectionName: 'lessons',
       tls: true,
+      dbName: 'Lessons',
     }),
-    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING + 'Users', {
+    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING, {
       connectionName: 'users',
       tls: true,
+      dbName: 'Users',
     }),
-    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING + 'statistics', {
+    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING, {
       connectionName: 'statistics',
       tls: true,
+      dbName: 'statistics',
     }),
     // end of MongoDB connections
     HttpModule,
@@ -70,6 +74,9 @@ import { JwtModule } from '@nestjs/jwt';
 })
 export class AppModule {}
 
+mongoose.connection.on('error', (err) => {
+  console.log(err);
+});
 console.error(
   path.resolve(
     __dirname,
