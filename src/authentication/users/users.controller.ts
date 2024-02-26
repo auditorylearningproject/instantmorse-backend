@@ -9,25 +9,28 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service'; // Import your user service
 // import { CreateUserDto } from './dto/create-user.dto';
-import { User } from '../schemas/users.model';
+import { User } from './users.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users') // Base route for this controller
 export class UserController {
   constructor(private readonly userService: UsersService) {} // Inject user service
 
-  @Post()
-  async create(
-    @Body()
-    CreateUserDto: {
-      userId: number;
-      username: string;
-      password: string;
-      access_token: string;
-    },
-  ): Promise<User> {
-    return this.userService.create(CreateUserDto);
-  }
+  // @Post()
+  // async create(
+  //   @Body()
+  //   CreateUserDto: {
+  //     userId: number;
+  //     username: string;
+  //     password: string;
+  //     access_token: string;
+  //   },
+  // ): Promise<User> {
+  //   return this.userService.create(CreateUserDto);
+  // }
+
+  //The 'create' method here seems like it has invalid syntax.
+  //      (plus, we should probably be storing userid + access_token in a separate document/table so that a user can have multiple open sessions.)
 
   // @Get()
   // async findAll(): Promise<Cat[]> {
