@@ -16,6 +16,7 @@ export class AuthenticationService {
     username: string,
     password: string,
   ): Promise<{ access_token: string }> {
+    // [[ old code (before merge) ]]
     // The way UsersService is import here caused an error, you might need to rework it
 
     // const user = await this.usersService.findByUsername(username); //finds the username
@@ -27,7 +28,16 @@ export class AuthenticationService {
     //   return result;
     // }
     // const payload = { sub: user.userId, username: user.username };
-    const payload = {};
+    
+      const payload = {}; //temp variable to make the class happy
+      
+    // [[ new code (after merge) ]]
+    //const user = await this.usersService.findByUsername(username); //finds the username
+    //if (user?.password !== password) {
+    //  //if the username is found, checks the password
+    //  throw new UnauthorizedException();
+    // }
+    //const payload = { sub: user.userId, username: user.username };
     return {
       access_token: await this.jwtService.signAsync(payload), //generates JWT
     };
