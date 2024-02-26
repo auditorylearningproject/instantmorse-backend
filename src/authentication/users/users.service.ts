@@ -19,17 +19,9 @@ export class UsersService {
     return this.userModel.findById(userId).exec();
   }
 
-  async findByUsername(userName: string): Promise<User> {
-    try {
-      const user = await User.findOne({ name: userName });
-      console.log(user);
-    } catch (error) {
-      console.error(error);
-    }
+  async findByUsername(username: string): Promise<User | undefined> {
+    return this.userModel.findOne({ username }).exec();
   }
-  // async findByUsername(username: string): Promise<User | undefined> {
-  //   return this.userModel.findOne({ username: username }).exec();
-  // }
 
   async findByToken(access_token: string): Promise<User> {
     return this.userModel.findOne({ access_token }).exec();
