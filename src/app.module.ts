@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TranscribeService } from './transcript/transcript.service';
@@ -34,25 +34,39 @@ import mongoose from 'mongoose';
       serveStaticOptions: { fallthrough: true },
     }),
     // begin MongoDB connections
-    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING, { tls: true }),
-    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING, {
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
       connectionName: 'lessons',
-      tls: true,
-      dbName: 'Lessons',
+      useFactory: async (config: ConfigService) => ({
+        uri: config.get<string>('DB_CONNECTION_STRING'),
+        tls: true,
+        dbName: 'Lessons',
+      }),
     }),
-    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING, {
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
       connectionName: 'users',
-      tls: true,
-      dbName: 'Users',
+      useFactory: async (config: ConfigService) => ({
+        uri: config.get<string>('DB_CONNECTION_STRING'),
+        tls: true,
+        dbName: 'Users',
+      }),
     }),
-    MongooseModule.forRoot(process.env.DB_CONNECTION_STRING, {
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
       connectionName: 'statistics',
-      tls: true,
-      dbName: 'statistics',
+      useFactory: async (config: ConfigService) => ({
+        uri: config.get<string>('DB_CONNECTION_STRING'),
+        tls: true,
+        dbName: 'statistics',
+      }),
     }),
     // end of MongoDB connections
     HttpModule,
-    UsersModule,
+    //UsersModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
@@ -70,7 +84,7 @@ import mongoose from 'mongoose';
       useClass: NotFoundFilter,
     },
   ],
-  exports: [AuthenticationService],
+  //exports: [AuthenticationService],
 })
 export class AppModule {}
 
