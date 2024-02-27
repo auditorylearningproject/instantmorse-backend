@@ -2,7 +2,7 @@ import {
   Controller,
   Get,
   Post,
-  // Body,
+  Body,
   // Patch,
   // Param,
   // Delete,
@@ -27,15 +27,11 @@ export class AuthenticationController {
   constructor(private authenticationService: AuthenticationService) {}
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Req() req): any {
-    return {
-      User: req.user,
-      msg: 'User logged in',
-    };
-    // this.authenticationService.signIn(
-    //   signInDto.username,
-    //   signInDto.password,
-    // );
+  signIn(@Req() signInDto: Record<string, any>) {
+    return this.authenticationService.signIn(
+      signInDto.username,
+      signInDto.password,
+    );
   }
 
   // @Get() //maps GET/authentication - gets information
