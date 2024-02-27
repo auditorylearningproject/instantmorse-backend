@@ -33,16 +33,6 @@ export class AuthenticationController {
       signInDto.password,
     );
   }
-  // async submit(@Body() username: string, password: string) {
-  //   try {
-  //     UsersService.findOne(username, password);
-  //     console.log("Success");
-  //     return { message: "Success" };
-  //   } catch (error) {
-  //     console.log("Error")
-  //     throw new Error("Error happened");
-  //   }
-  // }
   
   // @Get() //maps GET/authentication - gets information
   // @Redirect("static/auth", 301) //sample redirection - can redirect back to the authentication page if the user or pass is wrong

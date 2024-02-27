@@ -15,10 +15,10 @@ import * as path from 'path';
 
 import { AuthenticationService } from './authentication/authentication.service';
 import { AuthenticationController } from './authentication/authentication.controller';
-import { UsersModule } from './authentication/users/users.module';
-import { jwtConstants } from './authentication/constants';
+// import { UsersModule } from './authentication/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import mongoose from 'mongoose';
+import { UsersModule } from './authentication/users/users.module';
 
 @Module({
   imports: [
@@ -66,10 +66,10 @@ import mongoose from 'mongoose';
     }),
     // end of MongoDB connections
     HttpModule,
-    //UsersModule,
+    UsersModule,
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret,
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '30d' },
     }),
   ],
@@ -84,7 +84,6 @@ import mongoose from 'mongoose';
       useClass: NotFoundFilter,
     },
   ],
-  //exports: [AuthenticationService],
 })
 export class AppModule {}
 
