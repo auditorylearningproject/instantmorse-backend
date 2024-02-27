@@ -19,27 +19,27 @@ export class AuthenticationService {
     const user = await this.usersService.findByUsername(username); //finds the username
     if (user?.password !== password) {
       throw new UnauthorizedException();
-    } else if (user?.password === password) {
-      const payload = { sub: user.userId, username: user.username };
-      return {
-        access_token: await this.jwtService.signAsync(payload), //generates JWT
-      };
     }
-
-    // findAll(): Authentication[] {
-    //   return;
-    // }
-
-    // findOne(id: number) {
-    //   return `This action returns a #${id} authentication`;
-    // }
-
-    // update(id: number, updateAuthenticationDto: UpdateAuthenticationDto) {
-    //   return `This action updates a #${id} authentication`;
-    // }
-
-    // remove(id: number) {
-    //   return `This action removes a #${id} authentication`;
-    // }
+    const payload = { sub: user.userId, username: user.username };
+    return {
+      access_token: await this.jwtService.signAsync(payload), //generates JWT
+    };
   }
+
+  // findAll(): Authentication[] {
+  //   return;
+  // }
+
+  // findOne(id: number) {
+  //   return `This action returns a #${id} authentication`;
+  // }
+
+  // update(id: number, updateAuthenticationDto: UpdateAuthenticationDto) {
+  //   return `This action updates a #${id} authentication`;
+  // }
+
+  // remove(id: number) {
+  //   return `This action removes a #${id} authentication`;
+  // }
+  // }
 }
