@@ -2,38 +2,42 @@ import {
   Controller,
   Get,
   Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
+  // Body,
+  // Patch,
+  // Param,
+  // Delete,
   Req,
   HttpCode,
-  Header,
-  Redirect,
+  // Header,
+  // Redirect,
   HttpStatus,
   UseGuards,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { signInDto } from './dto/createUser.dto';
-import { UsersService } from './users/users.service';
-import { Request } from 'express';
-import { Authentication } from './interfaces/authentication.interface';
+// import { signInDto } from './dto/createUser.dto';
+// import { UsersService } from './users/users.service';
+// import { Request } from 'express';
+// import { Authentication } from './interfaces/authentication.interface';
 import { AuthenticationGuard } from './authentication.guard';
-import { userInfo } from 'os';
-import { User } from './users/users.schema';
+// import { userInfo } from 'os';
+// import { User } from './users/users.schema';
 
 @Controller('authentication') //means it looks in the folder /authentication
 export class AuthenticationController {
   constructor(private authenticationService: AuthenticationService) {}
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: Record<string, any>) {
-    return this.authenticationService.signIn(
-      signInDto.username,
-      signInDto.password,
-    );
+  signIn(@Req() req): any {
+    return {
+      User: req.user,
+      msg: 'User logged in',
+    };
+    // this.authenticationService.signIn(
+    //   signInDto.username,
+    //   signInDto.password,
+    // );
   }
-  
+
   // @Get() //maps GET/authentication - gets information
   // @Redirect("static/auth", 301) //sample redirection - can redirect back to the authentication page if the user or pass is wrong
   // async findAll(@Req() request: Request): Promise<Authentication[]> {
