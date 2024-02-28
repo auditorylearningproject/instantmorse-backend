@@ -12,9 +12,10 @@ import {
   // Redirect,
   HttpStatus,
   UseGuards,
+  Body,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-// import { signInDto } from './dto/signIn.dto';
+// import { SignInDto } from './dto/signIn.dto';
 // import { UsersService } from './users/users.service';
 // import { Request } from 'express';
 // import { Authentication } from './interfaces/authentication.interface';
@@ -27,11 +28,8 @@ export class AuthenticationController {
   constructor(private authenticationService: AuthenticationService) {}
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Req() signInDto: Record<string, any>) {
-    return this.authenticationService.signIn(
-      signInDto.username,
-      signInDto.password,
-    );
+  signIn(@Body() req: string | any) {
+    return this.authenticationService.signIn(req.username, req.password);
   }
 
   // @Get() //maps GET/authentication - gets information

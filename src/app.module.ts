@@ -45,9 +45,9 @@ import { UsersModule } from './authentication/users/users.module';
       }),
     }),
     MongooseModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule.forRoot()],
       inject: [ConfigService],
-      connectionName: 'users',
+      connectionName: 'user-connect',
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('DB_CONNECTION_STRING'),
         tls: true,

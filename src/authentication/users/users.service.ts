@@ -7,7 +7,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(webUser.name, 'users') private userModel: Model<webUser>,
+    @InjectModel(webUser.name, 'user-connect')
+    private userModel: Model<webUser>,
   ) {}
 
   async findAll(): Promise<webUser[]> {
