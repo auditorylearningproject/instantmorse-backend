@@ -29,6 +29,16 @@ export class UsersService {
     return this.userModel.findOne({ access_token }).exec();
   }
 
+  async updateToken(
+    username: string,
+    access_token: string,
+  ): Promise<webUser | undefined> {
+    const tokenUpdater = await this.userModel.findOneAndUpdate(
+      { username: username },
+      { access_token: access_token },
+    );
+    return tokenUpdater;
+  }
   // async create(username: User): Promise<webUser> {
   //   const createdUser = new this.userModel(username);
   //   return createdUser.save();
