@@ -13,6 +13,7 @@ import {
   HttpStatus,
   UseGuards,
   Body,
+  // Put,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 // import { SignInDto } from './dto/signIn.dto';
@@ -31,6 +32,15 @@ export class AuthenticationController {
   signIn(@Body() req: string | any) {
     return this.authenticationService.signIn(req.username, req.password);
   }
+
+  // @HttpCode(HttpStatus.OK)
+  // @Get('checkToken')
+  // accessCheck(@Body() req: string | any) {
+  //   return this.authenticationService.accessCheck(
+  //     req.username,
+  //     req.access_token,
+  //   );
+  // }
 
   // @Get() //maps GET/authentication - gets information
   // @Redirect("static/auth", 301) //sample redirection - can redirect back to the authentication page if the user or pass is wrong

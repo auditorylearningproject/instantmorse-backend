@@ -25,6 +25,17 @@ export class UsersService {
     return user;
   }
 
+  // async findAccessToken(
+  //   userName: string,
+  //   access_token: string,
+  // ): Promise<webUser | undefined> {
+  //   const user = await this.userModel.findOne(
+  //     { username: userName },
+  //     { access_token: access_token },
+  //   );
+  //   return user;
+  // }
+
   async findByToken(access_token: string): Promise<webUser> {
     return this.userModel.findOne({ access_token }).exec();
   }
