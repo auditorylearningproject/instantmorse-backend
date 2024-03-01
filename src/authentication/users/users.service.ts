@@ -25,35 +25,16 @@ export class UsersService {
     return user;
   }
 
-  // async findAccessToken(
-  //   userName: string,
-  //   access_token: string,
-  // ): Promise<webUser | undefined> {
-  //   const user = await this.userModel.findOne(
-  //     { username: userName },
-  //     { access_token: access_token },
-  //   );
+  // async accessCheck(access_token: string): Promise<webUser | undefined> {
+  //   const user = await this.userModel.findOne({ access_token: access_token });
   //   return user;
   // }
 
-  async findByToken(access_token: string): Promise<webUser> {
-    return this.userModel.findOne({ access_token }).exec();
+  async register(username: string, password: string): Promise<webUser> {
+    const createdUser = new this.userModel(username, password);
+    return createdUser.save();
   }
 
-  async updateToken(
-    username: string,
-    access_token: string,
-  ): Promise<webUser | undefined> {
-    const tokenUpdater = await this.userModel.findOneAndUpdate(
-      { username: username },
-      { access_token: access_token },
-    );
-    return tokenUpdater;
-  }
-  // async create(username: User): Promise<webUser> {
-  //   const createdUser = new this.userModel(username);
-  //   return createdUser.save();
-  // }
   async create(createUserDto: CreateUserDto): Promise<webUser> {
     const createdUser = new this.userModel(createUserDto);
     return createdUser.save();

@@ -2,7 +2,6 @@ import {
   Controller,
   Get,
   Post,
-  // Body,
   // Patch,
   // Param,
   // Delete,
@@ -13,7 +12,8 @@ import {
   HttpStatus,
   UseGuards,
   Body,
-  // Put,
+  // Param,
+  Put,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 // import { SignInDto } from './dto/signIn.dto';
@@ -33,6 +33,18 @@ export class AuthenticationController {
     return this.authenticationService.signIn(req.username, req.password);
   }
 
+  @HttpCode(HttpStatus.OK)
+  @Put('register')
+  register(@Req() req: string | any) {
+    return this.authenticationService.register(req.username, req.password);
+  }
+
+  // @HttpCode(HttpStatus.OK)
+  // @Get(':access_token') //gets a specific object or type from the stored info
+  // accessCheck(@Param('access_token') access_token: string) {
+  //   // console.log(access_token);
+  //   return this.authenticationService.accessCheck(access_token);
+  // }
   // @HttpCode(HttpStatus.OK)
   // @Get('checkToken')
   // accessCheck(@Body() req: string | any) {
