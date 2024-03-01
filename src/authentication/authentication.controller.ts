@@ -2,48 +2,46 @@ import {
   Controller,
   Get,
   Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
+  // Body,
+  // Patch,
+  // Param,
+  // Delete,
   Req,
   HttpCode,
-  Header,
-  Redirect,
+  // Header,
+  // Redirect,
   HttpStatus,
   UseGuards,
+  Body,
+  // Put,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { signInDto } from './dto/createUser.dto';
-import { UsersService } from './users/users.service';
-import { Request } from 'express';
-import { Authentication } from './interfaces/authentication.interface';
+// import { SignInDto } from './dto/signIn.dto';
+// import { UsersService } from './users/users.service';
+// import { Request } from 'express';
+// import { Authentication } from './interfaces/authentication.interface';
 import { AuthenticationGuard } from './authentication.guard';
-import { userInfo } from 'os';
-import { User } from './users/users.schema';
+// import { userInfo } from 'os';
+// import { User } from './users/users.schema';
 
 @Controller('authentication') //means it looks in the folder /authentication
 export class AuthenticationController {
   constructor(private authenticationService: AuthenticationService) {}
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: Record<string, any>) {
-    return this.authenticationService.signIn(
-      signInDto.username,
-      signInDto.password,
-    );
+  signIn(@Body() req: string | any) {
+    return this.authenticationService.signIn(req.username, req.password);
   }
-  // async submit(@Body() username: string, password: string) {
-  //   try {
-  //     UsersService.findOne(username, password);
-  //     console.log("Success");
-  //     return { message: "Success" };
-  //   } catch (error) {
-  //     console.log("Error")
-  //     throw new Error("Error happened");
-  //   }
+
+  // @HttpCode(HttpStatus.OK)
+  // @Get('checkToken')
+  // accessCheck(@Body() req: string | any) {
+  //   return this.authenticationService.accessCheck(
+  //     req.username,
+  //     req.access_token,
+  //   );
   // }
-  
+
   // @Get() //maps GET/authentication - gets information
   // @Redirect("static/auth", 301) //sample redirection - can redirect back to the authentication page if the user or pass is wrong
   // async findAll(@Req() request: Request): Promise<Authentication[]> {

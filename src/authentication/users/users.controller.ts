@@ -1,16 +1,16 @@
 import {
   Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  Put,
+  // Get,
+  // Post,
+  // Body,
+  // Param,
+  // Delete,
+  // Put,
 } from '@nestjs/common';
 import { UsersService } from './users.service'; // Import your user service
 // import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './users.schema';
-import { CreateUserDto } from './dto/create-user.dto';
+// import { User } from './users.schema';
+// import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users') // Base route for this controller
 export class UserController {

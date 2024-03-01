@@ -1,5 +1,6 @@
 export class CreateUserDto {
   userID: number;
-  username: any;
-  password: any;
+  username: string;
+  password: string;
+  access_token: string;
 }
