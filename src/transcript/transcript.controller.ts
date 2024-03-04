@@ -10,7 +10,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { TranscribeRequestDto } from '../dto/transcribe';
+import { TranscribeRequestDto } from './transcribe.dto';
 import { Readable } from 'stream';
 import { PassThrough, Writable } from 'stream';
 import { TranscribeService } from './transcript.service';

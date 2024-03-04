@@ -19,10 +19,18 @@ export class NotFoundFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
     console.error(ctx.getRequest<Request>().url);
-    console.error('Vue.js static files not found, request dropped.');
     if (exception.code === 'ENOENT') {
       response.status(HttpStatus.NOT_FOUND);
+      console.error('Vue.js static files not found, request dropped.');
+    } else {
+      console.error(exception);
+      console.error('This request was found, but it produced an error!!!');
     }
     response.status(status);
+    response.json({
+      statusCode: status,
+      error: exception.code,
+      message: 'Something went wrong!',
+    });
   }
 }

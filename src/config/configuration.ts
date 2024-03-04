@@ -6,4 +6,5 @@ export default () => ({
   },
   isProduction: process.env.PRODUCTION === 'true',
   database_conn_string: process.env.DB_CONNECTION_STRING,
+  jwt_secret: process.env.JWT_SECRET,
 });

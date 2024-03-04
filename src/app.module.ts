@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
@@ -13,12 +13,13 @@ import { APP_FILTER } from '@nestjs/core';
 import { NotFoundFilter } from './not-found-filter';
 import * as path from 'path';
 
-import { AuthenticationService } from './authentication/authentication.service';
-import { AuthenticationController } from './authentication/authentication.controller';
+//import { AuthenticationService } from './authentication/authentication.service';
+//import { AuthenticationController } from './authentication/authentication.controller';
 // import { UsersModule } from './authentication/users/users.module';
-import { JwtModule } from '@nestjs/jwt';
 import mongoose from 'mongoose';
-import { UsersModule } from './authentication/users/users.module';
+import { UserModule } from './new_auth/users/user.module';
+import { AuthModule } from './new_auth/auth/auth.module';
+//import { UsersModule } from './authentication/users/users.module';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { UsersModule } from './authentication/users/users.module';
       rootPath: path.resolve(
         '/home/srvhost/project/instantmorse-frontend/app-frontend/dist',
       ),
-      serveStaticOptions: { fallthrough: true },
+      exclude: ['/api*'],
+      serveStaticOptions: { fallthrough: true }, //change to true to drop requests
     }),
     // begin MongoDB connections
     MongooseModule.forRootAsync({
@@ -45,13 +47,13 @@ import { UsersModule } from './authentication/users/users.module';
       }),
     }),
     MongooseModule.forRootAsync({
-      imports: [ConfigModule.forRoot()],
+      imports: [ConfigModule],
       inject: [ConfigService],
-      connectionName: 'user-connect',
+      connectionName: 'users',
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('DB_CONNECTION_STRING'),
         tls: true,
-        dbName: 'Users',
+        dbName: 'users',
       }),
     }),
     MongooseModule.forRootAsync({
@@ -66,18 +68,15 @@ import { UsersModule } from './authentication/users/users.module';
     }),
     // end of MongoDB connections
     HttpModule,
-    UsersModule,
-    JwtModule.register({
-      global: true,
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '30d' },
-    }),
+    UserModule, // the forwardref solves(?) the issue of circular dependency on mongoose methods that are called asyncronously
+    AuthModule,
+    //UsersModule,
   ],
-  controllers: [AppController, TranscriptController, AuthenticationController],
+  controllers: [AppController, TranscriptController], //AuthenticationController],
   providers: [
     AppService,
-    AuthenticationService,
-    AuthenticationController,
+    //AuthenticationService,
+    //AuthenticationController,
     TranscribeService,
     {
       provide: APP_FILTER,
