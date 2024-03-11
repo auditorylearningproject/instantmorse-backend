@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
@@ -17,8 +17,8 @@ import * as path from 'path';
 //import { AuthenticationController } from './authentication/authentication.controller';
 // import { UsersModule } from './authentication/users/users.module';
 import mongoose from 'mongoose';
-import { UserModule } from './new_auth/users/user.module';
-import { AuthModule } from './new_auth/auth/auth.module';
+import { UsersModule } from './authentication/users/users.module';
+import { AuthModule } from './authentication/auth.module';
 //import { UsersModule } from './authentication/users/users.module';
 
 @Module({
@@ -68,9 +68,8 @@ import { AuthModule } from './new_auth/auth/auth.module';
     }),
     // end of MongoDB connections
     HttpModule,
-    UserModule, // the forwardref solves(?) the issue of circular dependency on mongoose methods that are called asyncronously
+    UsersModule,
     AuthModule,
-    //UsersModule,
   ],
   controllers: [AppController, TranscriptController], //AuthenticationController],
   providers: [

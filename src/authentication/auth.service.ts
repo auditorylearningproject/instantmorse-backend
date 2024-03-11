@@ -1,21 +1,16 @@
-import {
-  Inject,
-  Injectable,
-  UnauthorizedException,
-  forwardRef,
-} from '@nestjs/common';
-import { UserService } from '../users/user.service';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from '../users/create-user.dto';
+//import { CreateUserDto } from '../users/create-user.dto';
 import TokenInterface from './token.interface';
-import { User } from '../users/user.schema';
-import { AuthModule } from './auth.module';
+//import { User } from '../users/user.schema';
+//import { AuthModule } from './auth.module';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UserService, //forwardRef?
+    private usersService: UsersService, //forwardRef?
     private jwtService: JwtService,
   ) {}
 
@@ -23,7 +18,7 @@ export class AuthService {
     username: string,
     password: string,
   ): Promise<{ token: string; expiresIn: number }> {
-    const user = await this.userService.findOne(username);
+    const user = await this.usersService.findOne(username);
 
     if (!user) {
       throw new UnauthorizedException('Invalid username or password.'); // username doesn't exist
