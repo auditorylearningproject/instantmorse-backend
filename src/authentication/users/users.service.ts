@@ -50,3 +50,4 @@ export class UsersService {
     return this.userModel.findByIdAndDelete(userId).exec();
   }
 }
+

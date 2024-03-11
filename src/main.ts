@@ -8,6 +8,7 @@ import * as http from 'http';
 import * as https from 'https';
 import { ConfigService } from '@nestjs/config';
 import { INestApplication } from '@nestjs/common';
+import * as cookieParser from 'cookie-parser';
 
 let httpsOptions;
 
@@ -25,6 +26,7 @@ async function bootstrap() {
   devPort = configService.get<number>('DEV_PORT');
   app.setGlobalPrefix('api');
   app.enableCors();
+  app.use(cookieParser());
   app.use((_, res, next) => {
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
