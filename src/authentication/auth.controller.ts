@@ -17,7 +17,7 @@ import { AuthGuard } from './auth.guard';
 import { Response } from 'express';
 import TokenInterface from './token.interface';
 
-@Controller('auth')
+@Controller('authentication')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
