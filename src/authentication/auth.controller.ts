@@ -54,7 +54,7 @@ export class AuthController {
   getProfile(@Req() req) {
     // we have the JWT, so get the username from it
     console.log(req.user['username']);
-    console.log(req.user['userID']);
+    console.log(req.user['sub']);
     return req.user; // contains 'sub' (userID), username, and 'exp' (expiration date)
   }
 }
