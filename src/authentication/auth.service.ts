@@ -43,7 +43,7 @@ export class AuthService {
 
   public createCookie(tokenData: TokenInterface) {
     return {
-      Authorization: 'Bearer ' + tokenData.token,
+      Authorization: `Bearer ${tokenData.token}`,
       HttpOnly: '',
       'Max-Age': tokenData.expiresIn,
     };

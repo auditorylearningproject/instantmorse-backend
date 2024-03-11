@@ -33,10 +33,14 @@ export class AuthController {
       signInDto.password,
     );
     const cookie = this.authService.createCookie(jwt_token as TokenInterface);
-    for (const [key, value] of Object.entries(cookie)) {
-      // Set the cookie using response.cookie
-      response.cookie(key, value);
-    }
+    //for (const [key, value] of Object.entries(cookie)) {
+    // Set the cookie using response.cookie
+    response.cookie('Authorization', cookie.Authorization, {
+      maxAge: cookie['Max-Age'],
+      encode: (v) => v, //prevents URL encode making spaces into %20
+    });
+    response.cookie('HttpOnly', cookie.HttpOnly);
+    //}
   //redirect?
   }
 
@@ -49,6 +53,8 @@ export class AuthController {
   @Get('profile')
   getProfile(@Req() req) {
     // we have the JWT, so get the username from it
+    console.log(req.user['username']);
+    console.log(req.user['userID']);
     return req.user; // contains 'sub' (userID), username, and 'exp' (expiration date)
   }
 }
