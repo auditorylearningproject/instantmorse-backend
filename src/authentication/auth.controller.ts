@@ -41,7 +41,7 @@ export class AuthController {
     });
     response.cookie('HttpOnly', cookie.HttpOnly);
     //}
-  //redirect?
+    //redirect?
   }
 
   @Get('login')

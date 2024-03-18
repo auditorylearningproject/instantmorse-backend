@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -13,6 +14,11 @@ export class LessonController {
   constructor(private lessonService: LessonService) {}
 
   @HttpCode(HttpStatus.OK)
-  @Post('select')
-  async selection() {}
+  @Get('select')
+  async selection() Promise<User[]>{
+
+  }
+  async findAll(): Promise<User[]> {
+    return this.usersService.findAll();
+  }
 }
