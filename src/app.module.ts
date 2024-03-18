@@ -13,12 +13,14 @@ import { APP_FILTER } from '@nestjs/core';
 import { NotFoundFilter } from './not-found-filter';
 import * as path from 'path';
 
-import { AuthenticationService } from './authentication/authentication.service';
-import { AuthenticationController } from './authentication/authentication.controller';
-import { UsersModule } from './authentication/users/users.module';
-import { jwtConstants } from './authentication/constants';
-import { JwtModule } from '@nestjs/jwt';
+//import { AuthenticationService } from './authentication/authentication.service';
+//import { AuthenticationController } from './authentication/authentication.controller';
+// import { UsersModule } from './authentication/users/users.module';
 import mongoose from 'mongoose';
+import { UsersModule } from './authentication/users/users.module';
+import { AuthModule } from './authentication/auth.module';
+import { AttemptModule } from './lesson_attempts/attempt.module';
+//import { UsersModule } from './authentication/users/users.module';
 
 @Module({
   imports: [
@@ -31,7 +33,8 @@ import mongoose from 'mongoose';
       rootPath: path.resolve(
         '/home/srvhost/project/instantmorse-frontend/app-frontend/dist',
       ),
-      serveStaticOptions: { fallthrough: true },
+      exclude: ['/api*'],
+      serveStaticOptions: { fallthrough: true }, //change to true to drop requests
     }),
     // begin MongoDB connections
     MongooseModule.forRootAsync({
@@ -51,7 +54,7 @@ import mongoose from 'mongoose';
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('DB_CONNECTION_STRING'),
         tls: true,
-        dbName: 'Users',
+        dbName: 'users',
       }),
     }),
     MongooseModule.forRootAsync({
@@ -66,25 +69,21 @@ import mongoose from 'mongoose';
     }),
     // end of MongoDB connections
     HttpModule,
-    //UsersModule,
-    JwtModule.register({
-      global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '30d' },
-    }),
+    UsersModule,
+    AuthModule,
+    AttemptModule,
   ],
-  controllers: [AppController, TranscriptController, AuthenticationController],
+  controllers: [AppController, TranscriptController], //AuthenticationController],
   providers: [
     AppService,
-    AuthenticationService,
-    AuthenticationController,
+    //AuthenticationService,
+    //AuthenticationController,
     TranscribeService,
     {
       provide: APP_FILTER,
       useClass: NotFoundFilter,
     },
   ],
-  //exports: [AuthenticationService],
 })
 export class AppModule {}
 

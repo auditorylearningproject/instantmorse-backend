@@ -4,13 +4,16 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
 import { Request } from 'express';
 
 @Injectable()
-export class AuthenticationGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+export class AuthGuard implements CanActivate {
+  constructor(
+    private jwtService: JwtService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -20,10 +23,12 @@ export class AuthenticationGuard implements CanActivate {
     }
     try {
       const payload = await this.jwtService.verifyAsync(token, {
-        secret: jwtConstants.secret,
+        secret: this.configService.get<string>('JWT_SECRET'),
       });
-      // 💡 We're assigning the payload to the request object here
+      // We're assigning the payload to the request object here
       // so that we can access it in our route handlers
+
+      // our payload contains 'sub' in the token and 'username' in the token.
       request['user'] = payload;
     } catch {
       throw new UnauthorizedException();
@@ -32,7 +37,8 @@ export class AuthenticationGuard implements CanActivate {
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    //console.log("LOOK " + request.cookies['Authorization']);
+    const [type, token] = request.cookies['Authorization']?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }
 }

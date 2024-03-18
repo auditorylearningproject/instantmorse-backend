@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import {
   Controller,
   Get,
@@ -10,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { TranscribeRequestDto } from '../dto/transcribe';
+import { TranscribeRequestDto } from './transcribe.dto';
 import { Readable } from 'stream';
 import { PassThrough, Writable } from 'stream';
 import { TranscribeService } from './transcript.service';
@@ -29,7 +30,11 @@ export class TranscriptController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
     @UploadedFile() file: Express.Multer.File,
-  ): Promise<string> {
+  ): Promise<
+    | string
+    | { transcript: string; confidence: number }
+    | [{ transcript: string; confidence: number }]
+  > {
     //@UploadedFiles() files: Array<Express.Multer.File>,
     try {
       //    const bufferStream = new PassThrough();
@@ -120,7 +125,11 @@ export class TranscriptController {
         }
       });
 
-      return new Promise<string>((resolve, reject) => {
+      return new Promise<
+        | string
+        | { transcript: string; confidence: number }
+        | [{ transcript: string; confidence: number }]
+      >((resolve, reject) => {
         command.on('end', () => {
           const processedData = Buffer.concat(outputBuffer);
           const trancriber = new TranscribeService();

@@ -8,6 +8,7 @@ import * as http from 'http';
 import * as https from 'https';
 import { ConfigService } from '@nestjs/config';
 import { INestApplication } from '@nestjs/common';
+import * as cookieParser from 'cookie-parser';
 
 let httpsOptions;
 
@@ -25,10 +26,21 @@ async function bootstrap() {
   devPort = configService.get<number>('DEV_PORT');
   app.setGlobalPrefix('api');
   app.enableCors();
+  app.use(cookieParser());
+  app.use((_, res, next) => {
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    // res.setHeader(
+    //   'Access-Control-Allow-Methods',
+    //   'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+    // );
+    // res.setHeader('Cross-origin-Embedder-Policy', 'require-corp');
+    // res.setHeader('Cross-origin-Opener-Policy','same-origin');
+    next();
+  });
   await app.init();
   appInstancePromise = Promise.resolve(app);
 }
-//add CORS host?
 (async () => {
   await bootstrap();
   const appInstance = await appInstancePromise;
@@ -43,7 +55,6 @@ async function bootstrap() {
     };
     const httpServer = http.createServer(server).listen(port);
     const httpsServer = https.createServer(httpsOptions, server).listen(443);
-
   } else {
     httpsOptions = {
       key: fs.readFileSync('src/config/local_certs/localhost.key'),
@@ -51,6 +62,4 @@ async function bootstrap() {
     };
     const httpServer = http.createServer(server).listen(devPort);
   }
-
-  
 })();
