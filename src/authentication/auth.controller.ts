@@ -37,7 +37,7 @@ export class AuthController {
       // Set the cookie using response.cookie
       response.cookie(key, value);
     }
-  //redirect?
+    //redirect?
   }
 
   @Get('login')
