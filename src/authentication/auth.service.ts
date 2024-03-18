@@ -21,12 +21,16 @@ export class AuthService {
     const user = await this.usersService.findByUsername(username);
 
     if (!user) {
-      throw new UnauthorizedException('Invalid username or password (psst... it\'s the username).'); // username doesn't exist
+      throw new UnauthorizedException(
+        "Invalid username or password (psst... it's the username).",
+      ); // username doesn't exist
     }
 
     const match = await bcrypt.compare(password, user.password_hashed);
     if (!match) {
-      throw new UnauthorizedException('Invalid username or password (psst... it\'s the password).'); //password doesn't match
+      throw new UnauthorizedException(
+        "Invalid username or password (psst... it's the password).",
+      ); //password doesn't match
     }
 
     //const { password_hashed, ...result } = user;
