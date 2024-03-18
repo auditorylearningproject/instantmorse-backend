@@ -5,7 +5,7 @@ import { UsersModule } from './users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-const JWT_EXPIRE = '30d';
+export const JWT_EXPIRE = '30d';
 @Module({
   imports: [
     UsersModule,

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
+  Post,
+} from '@nestjs/common';
 import { CreateUserDto } from './create-user.dto';
 import { UsersService } from './users.service';
 import { User } from './user.schema';
@@ -14,7 +22,18 @@ export class UsersController {
 
   @Post('create')
   async create(@Body() createUserDto: CreateUserDto) {
-    this.usersService.register(createUserDto.username, createUserDto.password);
+    try {
+      await this.usersService.register(
+        createUserDto.username,
+        createUserDto.password,
+      );
+    } catch (exc) {
+      if (exc instanceof NotFoundException) {
+        throw new HttpException('Username already taken', HttpStatus.CONFLICT);
+      } else {
+        throw new Error(exc);
+      }
+    }
     return 'Create success!';
   }
 }

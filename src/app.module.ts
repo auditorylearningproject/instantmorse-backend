@@ -19,6 +19,7 @@ import * as path from 'path';
 import mongoose from 'mongoose';
 import { UsersModule } from './authentication/users/users.module';
 import { AuthModule } from './authentication/auth.module';
+import { AttemptModule } from './lesson_attempts/attempt.module';
 //import { UsersModule } from './authentication/users/users.module';
 
 @Module({
@@ -70,6 +71,7 @@ import { AuthModule } from './authentication/auth.module';
     HttpModule,
     UsersModule,
     AuthModule,
+    AttemptModule,
   ],
   controllers: [AppController, TranscriptController], //AuthenticationController],
   providers: [
