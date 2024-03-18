@@ -10,7 +10,13 @@ export class TranscribeService {
   readonly lang = 'en-US';
   speechRecognizer: SpeechRecognizer;
 
-  async transcribe(stream: fs.ReadStream): Promise<string> {
+  async transcribe(
+    stream: fs.ReadStream,
+  ): Promise<
+    | string
+    | { transcript: string; confidence: number }
+    | [{ transcript: string; confidence: number }]
+  > {
     const recording = await streamToBlob(stream, 'audio/flac'); //used to be "audio/ogg; codecs=opus" OR WEBM
 
     // /* test code to save file to filesystem... */
@@ -30,15 +36,15 @@ export class TranscribeService {
         null,
         this.lang,
         0,
-        false,
+        true, //show_all returning every possible transcript
         true,
       );
       console.log('Recognition result:', result);
-      return result as string;
+      return result;
     } catch (error) {
       // Handle any errors that occur during recognition
       console.error('Recognition error:', error);
-      return 'text';
+      return `Error: ${error}`;
     }
   }
   constructor() {
@@ -109,7 +115,11 @@ class SpeechRecognizer {
     pfilter: number = 0,
     show_all: boolean = false,
     with_confidence: boolean = false,
-  ): Promise<string | { transcript: string; confidence: number } | null> {
+  ): Promise<
+    | string
+    | { transcript: string; confidence: number }
+    | [{ transcript: string; confidence: number }]
+  > {
     if (!(audio_data instanceof Blob)) {
       throw new Error('audio_data must be audio data');
     }
@@ -165,9 +175,10 @@ class SpeechRecognizer {
       }
 
       // return results
-      if (show_all) {
-        return actual_result;
-      }
+      // if (show_all) {
+      //   console.log(actual_result);
+      //   //return actual_result;
+      // }
 
       if (
         !actual_result ||
@@ -176,10 +187,9 @@ class SpeechRecognizer {
       ) {
         console.log("We couldn't hear anything!");
         throw new Error('UnknownValueError');
+      } else if (show_all) {
+        return actual_result.alternative;
       }
-      // else {
-      //   console.log(response_text);
-      // }
 
       const best_hypothesis =
         'confidence' in actual_result
