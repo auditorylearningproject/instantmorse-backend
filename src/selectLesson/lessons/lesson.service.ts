@@ -12,4 +12,5 @@ export class LessonService {
   async findAll(): Promise<Lesson[]> {
     return this.lessonModel.find().exec();
   }
+  // implement method of findByID to give array of characters
 }

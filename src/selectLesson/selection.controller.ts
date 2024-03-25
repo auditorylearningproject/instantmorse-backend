@@ -11,4 +11,6 @@ export class SelectionController {
   async selection(): Promise<Lesson[]> {
     return this.lessonService.findAll();
   }
+
+  // implement method of findByID to give array of characters
 }
