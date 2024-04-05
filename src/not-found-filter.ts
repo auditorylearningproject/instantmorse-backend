@@ -26,8 +26,9 @@ export class NotFoundFilter implements ExceptionFilter {
     } else {
       console.error(exception);
       console.error('This request was found, but it produced an error!!!');
+      response.status(status);
     }
-    response.status(status);
+    //response.status(status);
     if (status == HttpStatus.UNAUTHORIZED) {
       response.json({
         statusCode: status,

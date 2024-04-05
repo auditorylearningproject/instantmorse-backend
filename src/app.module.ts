@@ -21,6 +21,7 @@ import { UsersModule } from './authentication/users/users.module';
 import { AuthModule } from './authentication/auth.module';
 import { AttemptModule } from './lesson_attempts/attempt.module';
 import { LessonModule } from './lesson_select/lesson.module';
+import { CWSettingsModule } from './cw_settings/settings.module';
 //import { UsersModule } from './authentication/users/users.module';
 
 @Module({
@@ -68,12 +69,23 @@ import { LessonModule } from './lesson_select/lesson.module';
         dbName: 'statistics',
       }),
     }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      connectionName: 'preferences',
+      useFactory: async (config: ConfigService) => ({
+        uri: config.get<string>('DB_CONNECTION_STRING'),
+        tls: true,
+        dbName: 'preferences',
+      }),
+    }),
     // end of MongoDB connections
     HttpModule,
-    UsersModule,
+    //UsersModule, << imported from the CWSettingsModule
     AuthModule,
     AttemptModule,
     LessonModule,
+    CWSettingsModule,
   ],
   controllers: [AppController, TranscriptController], //AuthenticationController],
   providers: [

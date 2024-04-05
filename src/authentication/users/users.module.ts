@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { User, UserSchema } from './user.schema';
+import { CWSettingsModule } from 'src/cw_settings/settings.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { User, UserSchema } from './user.schema';
       [{ name: User.name, schema: UserSchema }],
       'users',
     ),
+    CWSettingsModule,
   ],
   controllers: [UsersController],
   providers: [UsersService],
