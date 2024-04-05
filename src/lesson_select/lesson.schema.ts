@@ -1,10 +1,9 @@
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
-import { Int32 } from 'mongodb';
 import { HydratedDocument } from 'mongoose';
 
-export type UserDocument = HydratedDocument<Lesson>;
+export type LessonDocument = HydratedDocument<Lesson>;
 
-@Schema()
+@Schema({ collection: 'data' })
 export class Lesson {
   id: string;
 
@@ -17,10 +16,10 @@ export class Lesson {
   @Prop(
     raw({
       name: { type: String },
-      order: { type: Int32 },
+      order: { type: Number },
     }),
   )
   group: Record<string, any>;
 }
 
-export const UserSchema = SchemaFactory.createForClass(Lesson);
+export const LessonSchema = SchemaFactory.createForClass(Lesson);

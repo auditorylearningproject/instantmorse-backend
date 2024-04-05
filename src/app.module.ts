@@ -20,6 +20,7 @@ import mongoose from 'mongoose';
 import { UsersModule } from './authentication/users/users.module';
 import { AuthModule } from './authentication/auth.module';
 import { AttemptModule } from './lesson_attempts/attempt.module';
+import { LessonModule } from './lesson_select/lesson.module';
 //import { UsersModule } from './authentication/users/users.module';
 
 @Module({
@@ -44,7 +45,7 @@ import { AttemptModule } from './lesson_attempts/attempt.module';
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('DB_CONNECTION_STRING'),
         tls: true,
-        dbName: 'Lessons',
+        dbName: 'lessons',
       }),
     }),
     MongooseModule.forRootAsync({
@@ -72,6 +73,7 @@ import { AttemptModule } from './lesson_attempts/attempt.module';
     UsersModule,
     AuthModule,
     AttemptModule,
+    LessonModule,
   ],
   controllers: [AppController, TranscriptController], //AuthenticationController],
   providers: [

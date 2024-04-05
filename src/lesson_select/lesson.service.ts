@@ -6,16 +6,18 @@ import mongoose, { Model } from 'mongoose';
 @Injectable()
 export class LessonService {
   constructor(
-    @InjectModel(Lesson.name, 'data') private lessonModel: Model<Lesson>, //adding the database name here fixed the issues with injection!
+    @InjectModel(Lesson.name, 'lessons') private lessonModel: Model<Lesson>,
   ) {}
 
   async findAll(): Promise<Lesson[]> {
     return this.lessonModel.find().exec();
   }
 
-  async findById(lessonID: mongoose.Types.ObjectId): Promise<Lesson | null> {
-    
-    const result = await this.lessonModel.findById(lessonID).exec();
+  async findById(lessonID: string): Promise<Lesson | null> {
+ 
+    const result = await this.lessonModel
+      .findById(new mongoose.Types.ObjectId(lessonID))
+      .exec();
     if(!result){
       return null;
     }else{
