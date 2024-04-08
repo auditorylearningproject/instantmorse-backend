@@ -83,7 +83,7 @@ export class CWSettingsService {
   }
 
   async createSettings(userId: mongoose.Types.ObjectId) {
-    ok(!this.getSettings(userId)); // ensure the user doesn't already have settings in the DB
+    ok(!(await this.getSettings(userId))); // ensure the user doesn't already have settings in the DB
     //mongoDB Create new
     await this.settingsModel.create({ //const createdSettings = 
       user_id: userId,
