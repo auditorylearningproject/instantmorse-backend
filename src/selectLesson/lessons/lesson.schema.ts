@@ -11,7 +11,10 @@ export class Lesson {
   lesson_name: string;
 
   @Prop({ required: true })
-  array_o_chars: string;
+  array_o_chars: string[];
+
+  @Prop({ required: true })
+  group: object;
 }
 
-export const UserSchema = SchemaFactory.createForClass(Lesson);
+export const LessonSchema = SchemaFactory.createForClass(Lesson);
