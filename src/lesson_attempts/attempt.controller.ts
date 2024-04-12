@@ -17,10 +17,14 @@ import { AttemptService } from './attempt.service';
 import { AuthGuard } from 'src/authentication/auth.guard';
 import mongoose from 'mongoose';
 import { Attempt } from './schema/attempt.schema';
+import { LessonService } from '../lesson_select/lesson.service';
 
 @Controller('attempt')
 export class LessonAttemptController {
-  constructor(private attemptService: AttemptService) {}
+  constructor(
+    private attemptService: AttemptService,
+    private readonly lessonService: LessonService,
+  ) {}
 
   @UseGuards(AuthGuard)
   @Post()
@@ -47,12 +51,35 @@ export class LessonAttemptController {
   @UseGuards(AuthGuard)
   @Get('get-all')
   @Header('Cache-Control', 'none')
-  async get_all_attempts(@Req() req): Promise<Attempt[]> {
+  async get_all_attempts(
+    @Req() req,
+  ): Promise<Array<Attempt & { lesson_name: string }>> {
     try {
-      const val = await this.attemptService.getAll(
-        new mongoose.Types.ObjectId(req.user['sub'] ?? 'null'),
+      // const val = await this.attemptService.getAll(
+      //   new mongoose.Types.ObjectId(req.user['sub'] ?? 'null'),
+      // );
+
+      const userId = new mongoose.Types.ObjectId(req.user['sub'] ?? 'null');
+      const attempts = await this.attemptService.getAll(userId);
+
+      const attemptsWithLessons = await Promise.all(
+        attempts.map(async (attempt) => {
+          const lesson = await this.lessonService.findById(
+            attempt.lesson_id.toString(),
+          );
+          const lesson_name = lesson.lesson_name;
+          if (lesson) {
+            return {
+              ...attempt,
+              lesson_name: lesson_name,
+            };
+          } else {
+            return null;
+          }
+        }),
       );
-      return val;
+
+      return attemptsWithLessons.filter((attempt) => attempt !== null);
     } catch (error) {
       throw new HttpException(
         'Failed to retrieve attempts.',
