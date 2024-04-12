@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AxiosError, AxiosResponse } from 'axios';
 import * as fs from 'node:fs';
 import { Observable, catchError, map } from 'rxjs';
@@ -212,9 +212,15 @@ class SpeechRecognizer {
     } catch (e) {
       if (e instanceof Error) {
         if (e.name === 'AbortError') {
-          throw new Error('Recognition request failed: Timeout');
+          throw new HttpException(
+            `Recognition request failed: Timeout`,
+            HttpStatus.INTERNAL_SERVER_ERROR,
+          );        
         }
-        throw new Error(`Recognition request failed: ${e.message}`);
+        throw new HttpException(
+          `Recognition request failed: ${e.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
       }
       throw new Error('Recognition request failed');
     }
