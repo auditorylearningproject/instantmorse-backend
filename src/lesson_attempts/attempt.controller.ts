@@ -53,7 +53,7 @@ export class LessonAttemptController {
   @Header('Cache-Control', 'none')
   async get_all_attempts(
     @Req() req,
-  ): Promise<Array<Attempt & { lesson_name: string }>> {
+  ): Promise<Array<Attempt>> {
     try {
       // const val = await this.attemptService.getAll(
       //   new mongoose.Types.ObjectId(req.user['sub'] ?? 'null'),
@@ -67,12 +67,9 @@ export class LessonAttemptController {
           const lesson = await this.lessonService.findById(
             attempt.lesson_id.toString(),
           );
-          const lesson_name = lesson.lesson_name;
           if (lesson) {
-            return {
-              ...attempt,
-              lesson_name: lesson_name,
-            };
+            attempt.lesson_name = lesson.lesson_name;
+            return attempt;
           } else {
             return null;
           }
@@ -87,4 +84,5 @@ export class LessonAttemptController {
       );
     }
   }
+
 }

@@ -29,6 +29,9 @@ export class Attempt {
 
   @Prop({ required: true })
   date_time: Date;
+
+  @Prop({ select: false, required: false })
+  lesson_name: string; //this will be manually added by the controller
 }
 
 export const AttemptSchema = SchemaFactory.createForClass(Attempt);
