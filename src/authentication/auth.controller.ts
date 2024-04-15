@@ -37,9 +37,10 @@ export class AuthController {
     // Set the cookie using response.cookie
     response.cookie('Authorization', cookie.Authorization, {
       maxAge: cookie['Max-Age'],
+      sameSite: cookie['SameSite'] === 'none' ? 'none' : 'lax',
+      secure: cookie['Secure'],
       encode: (v) => v, //prevents URL encode making spaces into %20
     });
-    response.cookie('HttpOnly', cookie.HttpOnly);
     //}
     //redirect?
   }
