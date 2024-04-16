@@ -21,10 +21,7 @@ export class LessonController {
     try {
       const lesson = await this.lessonService.findAll();
       if (lesson === null) {
-        throw new HttpException(
-          'No lessons found with that ID',
-          HttpStatus.NOT_FOUND,
-        );
+        throw new HttpException('No lessons found', HttpStatus.NOT_FOUND);
       } else {
         return lesson;
       }
