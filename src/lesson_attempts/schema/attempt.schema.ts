@@ -6,7 +6,7 @@ import { User } from 'src/authentication/users/user.schema';
 export type AttemptDocument = HydratedDocument<Attempt>;
 
 @Schema() //this defines the collection name as the class name + "s", so "attempts"
-export class Attempt { 
+export class Attempt {
   _id: string;
 
   @Prop({ type: ObjectId, required: true })
