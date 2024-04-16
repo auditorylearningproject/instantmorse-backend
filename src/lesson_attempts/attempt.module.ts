@@ -6,6 +6,7 @@ import { Attempt, AttemptSchema } from './schema/attempt.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JWT_EXPIRE } from 'src/authentication/auth.module';
+import { LessonModule } from 'src/lesson_select/lesson.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { JWT_EXPIRE } from 'src/authentication/auth.module';
         signOptions: { expiresIn: JWT_EXPIRE },
       }),
     }),
+    LessonModule,
   ],
   controllers: [LessonAttemptController],
   providers: [AttemptService],

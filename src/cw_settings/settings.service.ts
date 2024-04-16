@@ -83,9 +83,18 @@ export class CWSettingsService {
   }
 
   async createSettings(userId: mongoose.Types.ObjectId) {
-    ok(!(await this.getSettings(userId))); // ensure the user doesn't already have settings in the DB
+    try {
+      await this.getSettings(userId);
+    } catch (error) {
+      throw new HttpException(
+        'Failed to retrieve settings.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+    // ensure the user doesn't already have settings in the DB
     //mongoDB Create new
-    await this.settingsModel.create({ //const createdSettings = 
+    await this.settingsModel.create({
+      //const createdSettings =
       user_id: userId,
       char_speed: 20,
       effective_speed_wpm: 20,
