@@ -145,11 +145,11 @@ export class TranscriptController {
               // eslint-disable-next-line prettier/prettier
               if(error instanceof HttpException){
                 const newErr = error as HttpException;
-                res.status(newErr.getStatus()).send();
+                res.status(newErr.getStatus()); //.send();
                 reject(error);
               } else {
                 console.error('Error processing audio file:', error);
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR); //.send();
                 reject(error);
               }
             });
