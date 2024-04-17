@@ -44,7 +44,7 @@ export class TranscribeService {
     } catch (error) {
       // Handle any errors that occur during recognition
       console.error('Recognition error:', error);
-      return `Error: ${error}`;
+      throw error;
     }
   }
   constructor() {
