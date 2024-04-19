@@ -12,6 +12,7 @@ import { UsersService } from './users.service';
 import { User } from './user.schema';
 import { CWSettingsService } from 'src/cw_settings/settings.service';
 import mongoose from 'mongoose';
+import { AssertionError } from 'assert';
 
 @Controller('user')
 export class UsersController {
@@ -38,6 +39,8 @@ export class UsersController {
     } catch (exc) {
       if (exc instanceof NotFoundException) {
         throw new HttpException('Username already taken or settings create fail', HttpStatus.CONFLICT);
+      } else if (exc instanceof AssertionError){
+        throw new HttpException('Default settings create failed for user.', HttpStatus.CONFLICT);
       } else {
         throw new Error(exc);
       }

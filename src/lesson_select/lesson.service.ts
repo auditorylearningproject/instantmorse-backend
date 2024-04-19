@@ -14,13 +14,12 @@ export class LessonService {
   }
 
   async findById(lessonID: string): Promise<Lesson | null> {
- 
     const result = await this.lessonModel
       .findById(new mongoose.Types.ObjectId(lessonID))
       .exec();
-    if(!result){
+    if (!result) {
       return null;
-    }else{
+    } else {
       return result;
     }
   }

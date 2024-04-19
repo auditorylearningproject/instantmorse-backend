@@ -6,7 +6,7 @@ import { User } from 'src/authentication/users/user.schema';
 export type AttemptDocument = HydratedDocument<Attempt>;
 
 @Schema() //this defines the collection name as the class name + "s", so "attempts"
-export class Attempt { 
+export class Attempt {
   _id: string;
 
   @Prop({ type: ObjectId, required: true })
@@ -29,6 +29,9 @@ export class Attempt {
 
   @Prop({ required: true })
   date_time: Date;
+
+  @Prop({ select: false, required: false })
+  lesson_name: string; //this will be manually added by the controller
 }
 
 export const AttemptSchema = SchemaFactory.createForClass(Attempt);

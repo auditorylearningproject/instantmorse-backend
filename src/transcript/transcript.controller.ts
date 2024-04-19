@@ -9,6 +9,7 @@ import {
   HttpStatus,
   UploadedFile,
   UseInterceptors,
+  HttpException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { TranscribeRequestDto } from './transcribe.dto';
@@ -141,13 +142,18 @@ export class TranscriptController {
               resolve(finalTranscription);
             })
             .catch((error) => {
-              console.error('Error processing audio file:', error);
-              res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
-              reject(error);
+              // eslint-disable-next-line prettier/prettier
+              if(error instanceof HttpException){
+                const newErr = error as HttpException;
+                res.status(newErr.getStatus()); //.send();
+                reject(error);
+              } else {
+                console.error('Error processing audio file:', error);
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR); //.send();
+                reject(error);
+              }
             });
         });
-
-        // ... (existing code)
       });
       // Respond with success if transcription is successful
     } catch (error) {
