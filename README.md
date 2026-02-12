@@ -1,30 +1,75 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Response Time–Based Auditory Learning — Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Server-side application for a web-based Morse code training platform
+that measures response time between audio playback and spoken user
+response. The system is designed to support “instant recognition”
+training, where users verbally identify Morse characters immediately
+after hearing them.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project was developed for Dr. John Rogers (Mechanical Engineering)
+as part of CSCI-4930.
 
-## Description
+## Problem Statement
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Traditional Morse code learning platforms (e.g., LCWO.net) rely on typed
+responses. This introduces a bottleneck: typing speed limits the ability
+to measure how quickly a user can recognize Morse characters.
+
+#### The goal of this system is to: 
+- Play Morse code audio for a given character or phrase 
+- Record the user’s spoken response
+- Measure the time between playback completion and the start of speech 
+- Determine whether the spoken response is correct (in-browser APIs with server fallback processing!)
+- Store results for long-term progress tracking
+
+## Core Responsibilities
+
+The backend is responsible for: 
+- Generating Morse code audio from text input 
+- Managing user accounts and sessions 
+- Recording and processing user audio 
+- Measuring response timing 
+- Performing speech recognition 
+- Validating responses 
+- Persisting session data
+
+## Tech Stack
+
+Language: TypeScript
+
+Framework: NestJS (Node.js)
+
+Web Server: Express (exposed via NestJS + serve-static)
+
+Audio Processing: fluent-ffmpeg
+
+Database: MongoDB
+
+Process Management: PM2
+
+Tooling: Prettier, ESLint
+
+Infrastructure: DigitalOcean VPS with scheduled snapshot backups
+
+## System Overview
+
+#### High-level flow:
+
+1.  Client requests a training session
+2.  Backend generates Morse audio
+3.  Client plays audio and records speech
+4.  Audio is uploaded to backend
+5.  Backend measures delay, recognizes speech, and validates response
+6.  Results are stored and returned
+
+## Key Features
+
+-   Text-to-Morse audio generation
+-   Configurable playback parameters
+-   Speech recording ingestion
+-   Response-time measurement
+-   Automatic correctness evaluation
+-   Persistent session tracking
 
 ## Installation
 
@@ -44,30 +89,3 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
